@@ -2,7 +2,9 @@ const { createCanvas, loadImage, Image } = require('canvas')
 const shapely = require('../plugins/shapely')
 
 module.exports = class Draw {
-  constructor() {}
+  constructor() {
+    
+  }
 
   getImage() {
     const canvas = createCanvas(640, 384)

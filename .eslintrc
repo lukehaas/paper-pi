@@ -1,0 +1,14 @@
+{
+  "extends": "eslint:recommended",
+  "rules": {
+    "semi": [ 2, "never" ]
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true
+  },
+  "globals": {
+    "browser": true
+  }
+}

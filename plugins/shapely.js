@@ -20,7 +20,6 @@
   version = "1.0",
   guid,
   stack,
-  img,
   shapely = function( ctx ) {
     return new shapely.fun.init( ctx );
   };
@@ -30,7 +29,6 @@
     init: function( ctx ) {
       guid = 0;
       stack = [];
-      img = new Image();
       tween.init();
       if ( !ctx ) {
         return this;
@@ -185,8 +183,7 @@
         }
       }
       if(options.style.pattern) {
-        this.img = new Image();
-        this.img.src = options.style.pattern;
+        this.img = options.style.pattern;
       }
     }
     if(options.rotation) {
@@ -499,20 +496,18 @@
     elem.restore();
   }
   function drawImage(elem,shape,options) {
-    //var img = new Image();
     elem.save();
     if(options.rotation) {
 
       elem.translate(shape.tranx,shape.trany);
       elem.rotate(options.rotation*shape.radian);
     }
-    if(options.src) {
-      img.src = options.src;
-    }
-    if(options.sx && options.sy && options.swidth && options.sheight) {
-      elem.drawImage(img,options.sx,options.sy,options.swidth,options.sheight,shape.x,shape.y,shape.width,shape.height);
-    } else {
-      elem.drawImage(img,shape.x,shape.y,shape.width,shape.height);
+    if(options.image) {
+      if(options.sx && options.sy && options.swidth && options.sheight) {
+        elem.drawImage(options.image,options.sx,options.sy,options.swidth,options.sheight,shape.x,shape.y,shape.width,shape.height);
+      } else {
+        elem.drawImage(options.image,shape.x,shape.y,shape.width,shape.height);
+      }
     }
     if(options.style) {
       applyStyle(elem,options.style,shape);

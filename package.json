@@ -6,6 +6,10 @@
   "author": "lukehaas <lukehaas@users.noreply.github.com>",
   "license": "GPL",
   "dependencies": {
-    "canvas": "^2.0.0-alpha.6"
+    "canvas": "^2.0.0-alpha.6",
+    "dotenv": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.11.0"
   }
 }
