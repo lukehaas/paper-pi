@@ -2,12 +2,19 @@
   "name": "paper-pi",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": "./bin/index.js",
   "repository": "git@github.com:lukehaas/paper-pi.git",
   "author": "lukehaas <lukehaas@users.noreply.github.com>",
   "license": "GPL",
   "dependencies": {
     "canvas": "^2.0.0-alpha.6",
-    "dotenv": "^4.0.0"
+    "coinbase": "^2.0.6",
+    "dark-sky": "^1.1.2",
+    "dotenv": "^4.0.0",
+    "oxford-dictionary": "^1.4.0",
+    "oxford-dictionary-api": "^1.0.1",
+    "ramda": "^0.25.0",
+    "twit": "^2.2.9"
   },
   "devDependencies": {
     "eslint": "^4.11.0"
