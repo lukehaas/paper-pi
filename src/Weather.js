@@ -5,10 +5,10 @@ module.exports = class Weather {
     this.darksky = new DarkSky(process.env.darksky_key)
   }
 
-  getForecast() {
+  getForecast(options) {
     return this.darksky.options({
-      latitude: 51.5074,
-      longitude: 0.1278,
+      latitude: options.latitude,
+      longitude: options.longitude,
       units: 'uk2'
     })
     .get()

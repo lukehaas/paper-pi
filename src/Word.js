@@ -1,7 +1,6 @@
 const Twit = require('twit')
-//const Dictionary = require("oxford-dictionary");
-const Dictionary = require("oxford-dictionary-api");
-require('dotenv').config()
+const Dictionary = require('oxford-dictionary-api')
+const R = require('ramda')
 
 module.exports = class Word {
   constructor() {
@@ -35,16 +34,23 @@ module.exports = class Word {
     }).text.match(/^(.*)$/m)[0].replace(predicate, '').trim()
   }
 
+  _upperCaseFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
   getWord() {
     return new Promise((resolve, reject) => {
       this._getTweets(response => {
-        const word = this._getWordFromTweets(response)
+        const getFormattedWord = R.compose(this._upperCaseFirstLetter, this._getWordFromTweets)
+        const word = getFormattedWord(response)
         this.dict.find(word, (erro, data) => {
-          console.log(data.results[0].lexicalEntries[0].entries[0].senses);
-          resolve()
+          const def = R.path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
+          if(def) {
+            resolve(`${word} - ${def}`)
+          } else {
+            reject('Dictionary fail')
+          }
         })
-        console.log(word)
-
       }, reject)
     })
   }

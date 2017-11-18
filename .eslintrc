@@ -1,7 +1,14 @@
 {
   "extends": "eslint:recommended",
   "rules": {
-    "semi": [ 2, "never" ]
+    "semi": [ 2, "never" ],
+    "no-console": 0,
+    "no-undef": 0,
+    "global-require": 0,
+    "quotes": [2, "single", {"avoidEscape": true, "allowTemplateLiterals": true}]
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017
   },
   "env": {
     "browser": true,

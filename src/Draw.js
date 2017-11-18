@@ -2,8 +2,8 @@ const { createCanvas, loadImage, Image } = require('canvas')
 const shapely = require('../plugins/shapely')
 
 module.exports = class Draw {
-  constructor(orientation) {
-    this.orientation = orientation === 'landscape' ? 0 : 1
+  constructor(options) {
+    this.orientation = options.orientation === 'landscape' ? 0 : 1
     this.width = this.orientation === 0 ? 640 : 384
     this.height = this.orientation === 0 ? 384 : 640
   }
@@ -18,7 +18,7 @@ module.exports = class Draw {
       y: 10,
       width:100,
       height: 100,
-      style: { fill: "#000000" }
+      style: { fill: '#000000' }
     })
 
     s.rect({
@@ -26,7 +26,7 @@ module.exports = class Draw {
       y: 110,
       width:100,
       height: 100,
-      style: { fill: "#ff0000" }
+      style: { fill: '#ff0000' }
     })
 
 

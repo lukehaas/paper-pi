@@ -7,11 +7,12 @@
   "author": "lukehaas <lukehaas@users.noreply.github.com>",
   "license": "GPL",
   "dependencies": {
+    "alexa-sdk": "^1.0.20",
     "canvas": "^2.0.0-alpha.6",
     "coinbase": "^2.0.6",
     "dark-sky": "^1.1.2",
     "dotenv": "^4.0.0",
-    "oxford-dictionary": "^1.4.0",
+    "node-fetch": "^1.7.3",
     "oxford-dictionary-api": "^1.0.1",
     "ramda": "^0.25.0",
     "twit": "^2.2.9"

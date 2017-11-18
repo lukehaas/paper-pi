@@ -1,6 +1,5 @@
 const R = require('ramda')
-const Client = require('coinbase').Client;
-require('dotenv').config()
+const Client = require('coinbase').Client
 
 module.exports = class Crypto {
   constructor() {
