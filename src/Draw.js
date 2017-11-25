@@ -1,6 +1,8 @@
 const { createCanvas, loadImage, Image } = require('canvas')
 const shapely = require('../plugins/shapely')
 
+const weather = require('./views/weather')
+
 module.exports = class Draw {
   constructor(options) {
     this.orientation = options.orientation === 'landscape' ? 0 : 1
@@ -9,6 +11,7 @@ module.exports = class Draw {
   }
 
   getImage() {
+    //ctx.measureText(txt).width
     const canvas = createCanvas(this.width, this.height)
     const ctx = canvas.getContext('2d')
     const s = shapely(ctx)

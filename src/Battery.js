@@ -2,5 +2,15 @@
 module.exports = class Battery {
   constructor() {}
 
-  getCharge() {}
+  getCharge() {
+    
+  }
+
+  getUptime() {
+
+  }
+
+  _putCharge() {
+
+  }
 }
