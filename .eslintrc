@@ -8,7 +8,11 @@
     "quotes": [2, "single", {"avoidEscape": true, "allowTemplateLiterals": true}]
   },
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2017,
+    "ecmaFeatures": {
+      "spread": true,
+      "experimentalObjectRestSpread": true
+    }
   },
   "env": {
     "browser": true,

@@ -20,4 +20,6 @@ module.exports = class Crypto {
       })
     })
   }
+
+  getPrevious() {}
 }

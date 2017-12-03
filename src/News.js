@@ -21,4 +21,6 @@ module.exports = class News {
         console.log(err)
       })
   }
+
+  getPrevious() {}
 }

@@ -40,6 +40,6 @@ init().then(data => {
   console.log(data.forecast)
   //console.log(data.wod)
 
-  //const image = new Draw({ orientation: 'landscape' }).getImage()
+  const image = new Draw({ orientation: 'landscape', ...data }).getImage()
   //console.log(image)
 })

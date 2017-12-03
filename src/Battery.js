@@ -13,4 +13,6 @@ module.exports = class Battery {
   _putCharge() {
 
   }
+
+  getPrevious() {}
 }

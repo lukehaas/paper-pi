@@ -25,6 +25,8 @@ module.exports = class Weather {
     })
     .catch()
   }
+
+  getPrevious() {}
 }
 /* possible icons:
 clear-day,

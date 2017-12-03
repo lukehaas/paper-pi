@@ -54,4 +54,6 @@ module.exports = class Word {
       }, reject)
     })
   }
+
+  getPrevious() {}
 }
