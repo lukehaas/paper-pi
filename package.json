@@ -5,7 +5,12 @@
   "bin": "./bin/index.js",
   "repository": "git@github.com:lukehaas/paper-pi.git",
   "author": "lukehaas <lukehaas@users.noreply.github.com>",
+  "private": true,
   "license": "GPL",
+  "scripts": {
+    "test": "mocha",
+    "lint": "eslint index.js \"lib/**/*.js\""
+  },
   "dependencies": {
     "alexa-sdk": "^1.0.20",
     "canvas": "^2.0.0-alpha.6",
@@ -19,6 +24,8 @@
     "twit": "^2.2.9"
   },
   "devDependencies": {
-    "eslint": "^4.11.0"
+    "eslint": "^4.11.0",
+    "mocha": "^4.0.1",
+    "sinon": "^4.1.2"
   }
 }

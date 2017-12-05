@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 module.exports = class Weather {
   constructor() {
     this.darksky = new DarkSky(process.env.darksky_key)
-    mongoose.connect('mongodb://localhost/paper-pi', { useMongoClient: true })
 
     const weatherSchema = {
       currently: Object,
@@ -36,14 +35,13 @@ module.exports = class Weather {
         if(doc === null) {
           const newEntry = new this.weatherCollection(dataSubset)
           newEntry.save()
-        } else {
+        } else if (dataSubset.hasOwnProperty('currently') && dataSubset.hasOwnProperty('hourly') && dataSubset.hasOwnProperty('daily')) {
           doc.currently = dataSubset.currently
           doc.hourly = dataSubset.hourly
           doc.daily = dataSubset.daily
           doc.save()
         }
       }).then(() => dataSubset)
-
     }).then(data => data)
     .catch()
   }

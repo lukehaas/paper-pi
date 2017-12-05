@@ -10,6 +10,8 @@ mongoose.Promise = global.Promise
 require('dotenv').config()
 
 async function init() {
+  mongoose.connect('mongodb://localhost/paper-pi', { useMongoClient: true })
+
   const bitcoin = 'test1'
   //const forecast = 'test2'
   const wod = 'test3'

@@ -9,6 +9,7 @@ module.exports = class Draw {
     this.height = this.orientation === 0 ? 384 : 640
     this.canvas = createCanvas(this.width, this.height)
     const ctx = this.canvas.getContext('2d')
+    ctx.antialias = 'none'
     this.sctx = shapely(ctx)
 
     this.forecast = options.forecast
