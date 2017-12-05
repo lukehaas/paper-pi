@@ -1,9 +1,20 @@
 const DarkSky = require('dark-sky')
 const R = require('ramda')
+const mongoose = require('mongoose')
 
 module.exports = class Weather {
   constructor() {
     this.darksky = new DarkSky(process.env.darksky_key)
+    mongoose.connect('mongodb://localhost/paper-pi', { useMongoClient: true })
+
+    const weatherSchema = {
+      currently: Object,
+      hourly: Object,
+      daily: Object,
+      updatedOn: { type: Date, default: Date.now }
+    }
+
+    this.weatherCollection = mongoose.model('Weather', weatherSchema)
   }
 
   _pluckForecast(data) {
@@ -11,9 +22,8 @@ module.exports = class Weather {
   }
 
   getForecast(options) {
-    // need to fix this bit
-    if (!options || typeof options !== 'object') throw new Error('Expected options object')
-    
+    if (!options || typeof options !== 'object') return new Promise((resolve, reject) => { reject('Expected options object') })
+
     return this.darksky.options({
       latitude: options.latitude,
       longitude: options.longitude,
@@ -21,24 +31,24 @@ module.exports = class Weather {
     })
     .get()
     .then(data => {
-      return this._pluckForecast(data)
-    })
+      const dataSubset = this._pluckForecast(data)
+      return this.weatherCollection.findOne((err, doc) => {
+        if(doc === null) {
+          const newEntry = new this.weatherCollection(dataSubset)
+          newEntry.save()
+        } else {
+          doc.currently = dataSubset.currently
+          doc.hourly = dataSubset.hourly
+          doc.daily = dataSubset.daily
+          doc.save()
+        }
+      }).then(() => dataSubset)
+
+    }).then(data => data)
     .catch()
   }
 
-  getPrevious() {}
+  getPrevious() {
+    return this.weatherCollection.findOne((err, doc) => doc)
+  }
 }
-/* possible icons:
-clear-day,
-clear-night,
-rain,
-snow,
-sleet,
-wind,
-fog,
-cloudy,
-partly-cloudy-day,
-partly-cloudy-night
-
-hail, thunderstorm, tornado
-*/

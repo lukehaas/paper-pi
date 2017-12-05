@@ -12,6 +12,7 @@
     "coinbase": "^2.0.6",
     "dark-sky": "^1.1.2",
     "dotenv": "^4.0.0",
+    "mongoose": "^4.13.6",
     "node-fetch": "^1.7.3",
     "oxford-dictionary-api": "^1.0.1",
     "ramda": "^0.25.0",

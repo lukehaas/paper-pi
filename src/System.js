@@ -1,9 +1,9 @@
 
-module.exports = class Battery {
+module.exports = class System {
   constructor() {}
 
   getCharge() {
-    
+
   }
 
   getUptime() {

@@ -407,6 +407,20 @@
     }
     return this;
   }
+  shapely.fun.measureText = function() {
+    var options = arguments[0] || {},
+    elem = this[0] || {};
+
+    elem.save();
+    if(options.style) {
+      if(options.style.font) {
+        elem.font = options.style.font;
+      }
+    }
+    elem.restore();
+
+    return elem.measureText(options.value)
+  }
   shapely.fun.rect = shapely.fun.rectangle = function() {
     var i = 0,
       l = this.length,
