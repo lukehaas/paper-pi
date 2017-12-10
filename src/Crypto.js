@@ -1,5 +1,5 @@
-const R = require('ramda')
-const Client = require('coinbase').Client
+const { path } = require('ramda')
+const  { Client } = require('coinbase')
 
 module.exports = class Crypto {
   constructor() {
@@ -11,7 +11,7 @@ module.exports = class Crypto {
 
     return new Promise((resolve, reject) => {
       this.client.getExchangeRates({ 'currency': coin }, (err, rates) => {
-        const price = R.path(['data', 'rates', 'GBP'], rates)
+        const price = path(['data', 'rates', 'GBP'], rates)
         if(price) {
           resolve(price)
         } else {

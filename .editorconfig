@@ -1,0 +1,15 @@
+# Helps to maintain a consistent coding style between different editors and IDEs
+# editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+
+# It is recommend that these remain unchanged
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true

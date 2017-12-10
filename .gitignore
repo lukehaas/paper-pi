@@ -60,3 +60,7 @@ typings/
 .DS_Store
 out.bmp
 weather_download.psd
+
+build/
+hidden/
+error.log

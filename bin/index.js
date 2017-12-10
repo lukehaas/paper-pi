@@ -6,30 +6,41 @@ const System = require('../src/System')
 const News = require('../src/News')
 const Draw = require('../src/Draw')
 const mongoose = require('mongoose')
-mongoose.Promise = global.Promise
+const fs = require('fs')
+const winston = require('winston')
 require('dotenv').config()
+mongoose.Promise = global.Promise
 
 async function init() {
-  mongoose.connect('mongodb://localhost/paper-pi', { useMongoClient: true })
+  winston.add(winston.transports.File, { filename: 'error.log' })
+  mongoose.connect(process.env.mongo_uri, { useMongoClient: true }, err => {
+    if(err) {
+      winston.log('error', 'Connection to MongoDB failed %s', err)
+    }
+  })
+
+  const news = new News()
+  const crypto = new Crypto()
+  const weather = new Weather()
+  const word = new Word()
+  const alexa = new Alexa()
 
   const bitcoin = 'test1'
   //const forecast = 'test2'
-  const wod = 'test3'
+  //const wotd = 'test3'
   const shoppingList = 'test4'
+  const headlines = 'test5'
 
-  //await new News().getHeadlines().catch(e => console.log(e))
 
-  //const bitcoin = await new Crypto().getPrice('BTC').catch(e => console.log(e))
-  const weather = new Weather()
+  //const headlines = await news.getHeadlines().catch(() => news.getPrevious())
+  //const bitcoin = await crypto.getPrice('BTC').catch(e => console.log(e))
   const forecast = await weather.getForecast({ latitude: 51.5074, longitude: 0.1278 }).catch(() => weather.getPrevious())
-  //const wod = await new Word().getWord().catch(e => console.log(e))
-  //const shoppingList = new Alexa().getShoppingList()
+  const wotd = await word.getWord().catch(() => word.getPrevious())
+  //const shoppingList = await alexa.getShoppingList().catch(e => console.log(e))
 
-  return { bitcoin, forecast, wod, shoppingList }
+  console.log(wotd)
+  return { headlines, bitcoin, forecast, wotd, shoppingList }
 }
-
-
-//const charge = new Battery().getCharge()
 
 
 
@@ -39,16 +50,18 @@ async function init() {
 // headlines?
 // tube/bus status?
 // store stuff to use again
+// https://github.com/winstonjs/winston - logging
 //console.log(bitcoin)
-async function handleData(data) {
+async function drawImage(data) {
   return await new Draw({ orientation: 'portrait', ...data }).getImage()
 }
-init().then(handleData).then(image => {
+init().then(drawImage).then(image => {
   mongoose.disconnect()
-  const base64Data = image.replace(/^data:image\/png;base64,/, '')
 
-  require('fs').writeFile('out.bmp', base64Data, 'base64', err => {
+  fs.writeFile('out.bmp', image,  err => {
     console.log(err)
   })
   //console.log(image)
+}).catch(() => {
+  winston.log('error', 'Failed to initialize')
 })

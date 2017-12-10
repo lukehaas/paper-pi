@@ -1,6 +1,6 @@
 const Twit = require('twit')
 const Dictionary = require('oxford-dictionary-api')
-const R = require('ramda')
+const { path, compose } = require('ramda')
 
 module.exports = class Word {
   constructor() {
@@ -38,13 +38,14 @@ module.exports = class Word {
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
 
-  getWord() {
+  _getDefinition() {
     return new Promise((resolve, reject) => {
       this._getTweets(response => {
-        const getFormattedWord = R.compose(this._upperCaseFirstLetter, this._getWordFromTweets)
+        const getFormattedWord = compose(this._upperCaseFirstLetter, this._getWordFromTweets)
         const word = getFormattedWord(response)
         this.dict.find(word, (erro, data) => {
-          const def = R.path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
+          const def = path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
+          clearTimeout(this.timeout)
           if(def) {
             resolve(`${word} - ${def}`)
           } else {
@@ -55,5 +56,23 @@ module.exports = class Word {
     })
   }
 
-  getPrevious() {}
+  _timer(reject) {
+    return setTimeout(reject => {
+      reject(new Error('timeout'))
+    }, 6000, reject)
+  }
+
+  getWord() {
+    this.timeout = undefined
+    return Promise.race([
+      this._getDefinition(),
+      new Promise((_, reject) => {
+        this.timeout = this._timer(reject)
+      })
+    ]).catch()
+  }
+
+  getPrevious() {
+    console.log('get previous')
+  }
 }
