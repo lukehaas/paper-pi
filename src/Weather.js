@@ -11,6 +11,10 @@ module.exports = class Weather {
     return pick(['currently', 'hourly', 'daily'], data)
   }
 
+  _hasProps(data) {
+    return data.hasOwnProperty('currently') && data.hasOwnProperty('hourly') && data.hasOwnProperty('daily') ? true : false
+  }
+
   getForecast(options) {
     if (!options || typeof options !== 'object') return new Promise((resolve, reject) => { reject('Expected options object') })
     return this.darksky.options({
@@ -23,19 +27,19 @@ module.exports = class Weather {
     .then(data => {
       const dataSubset = this._pluckForecast(data)
       return weatherModel.findOne((err, doc) => {
-        if(doc === null) {
+        if(doc === null && this._hasProps(dataSubset)) {
           const newEntry = new weatherModel(dataSubset)
           newEntry.save()
-        } else if (dataSubset.hasOwnProperty('currently') && dataSubset.hasOwnProperty('hourly') && dataSubset.hasOwnProperty('daily')) {
-          Object.assign(doc, this._pluckForecast(doc))
+        } else if(this._hasProps(dataSubset) && this._hasProps(doc)) {
+          Object.assign(doc, dataSubset)
           doc.save()
         }
       }).then(() => dataSubset)
     }).then(data => data)
-    .catch()
+    .catch(this._getPrevious)
   }
 
-  getPrevious() {
+  _getPrevious() {
     return weatherModel.findOne((err, doc) => doc)
   }
 }

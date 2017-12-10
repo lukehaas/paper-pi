@@ -3,15 +3,6 @@ const { path } = require('ramda')
 
 module.exports = class Weather {
   constructor(options) {
-    /*this.width = options.width
-    this.sctx = options.sctx
-    this.forecast = options.forecast
-    this.x = options.x
-    this.y = options.y
-    this.fg = options.fg
-    this.canvas = options.canvas
-    this.font = options.font*/
-
     Object.assign(this, options)
   }
 

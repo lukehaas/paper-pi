@@ -7,7 +7,7 @@ module.exports = class Crypto {
   }
 
   async getPrice(coin) {
-    if (!coin || typeof coin !== 'string') throw new Error('Expected coin string')
+    if (!coin || typeof coin !== 'string') return new Promise((resolve, reject) => { reject('Expected coin string') })
 
     return new Promise((resolve, reject) => {
       this.client.getExchangeRates({ 'currency': coin }, (err, rates) => {
@@ -15,11 +15,13 @@ module.exports = class Crypto {
         if(price) {
           resolve(price)
         } else {
-          reject(new Error('Call failed'))
+          reject(this._getPrevious)
         }
       })
     })
   }
 
-  getPrevious() {}
+  _getPrevious() {
+    console.log('get previous crypto')
+  }
 }

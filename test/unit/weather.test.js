@@ -49,9 +49,9 @@ describe('Weather', () => {
     })
   })
 
-  describe('getPrevious', () => {
+  describe('_getPrevious', () => {
     it('returns the previously stored forecast', async done => {
-      weather.getPrevious().then(data => {
+      weather._getPrevious().then(data => {
         expect(data.complete).toBeTruthy()
         expect(mongoose.model().findOne).toHaveBeenCalled()
         done()

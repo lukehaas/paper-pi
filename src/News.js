@@ -1,4 +1,5 @@
 const fetch = require('node-fetch')
+const { newsModel } = require('./models/model')
 
 module.exports = class News {
   constructor() {
@@ -13,12 +14,20 @@ module.exports = class News {
         return response.json()
       })
       .then(data => {
-        return data
+        return newsModel.findOne((err, doc) => {
+          if(doc === null && data.hasOwnProperty('articles')) {
+            const newEntry = new newsModel(data)
+            newEntry.save()
+          } else if (data.hasOwnProperty('articles')) {
+            doc.articles = data
+            doc.save()
+          }
+        }).then(() => data)
       })
-      .catch()
+      .catch(this._getPrevious)
   }
 
-  getPrevious() {
-    console.log('get previous')
+  _getPrevious() {
+    return newsModel.findOne((err, doc) => doc)
   }
 }
