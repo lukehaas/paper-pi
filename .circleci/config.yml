@@ -26,7 +26,7 @@ jobs:
           - v1-dependencies-
       - run:
           name: Install native dependencies
-          command: sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
+          command: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
       - run: yarn install
 
       - save_cache:
