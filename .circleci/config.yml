@@ -27,8 +27,9 @@ jobs:
           - v1-dependencies-
       - run:
           name: Install native dependencies
-          command: apt-get update && apt-get -y install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+          command: apt-get update && apt-get -y install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ nodejs
           # command: apk add libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
+      - run: npm i -g yarn
       - run: yarn install
 
       - save_cache:
