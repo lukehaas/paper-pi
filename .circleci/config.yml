@@ -7,11 +7,12 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.9
+      # - image: circleci/node:8.9
+      - image: mhart/alpine-node:8
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mongo:3.4.4
+      # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
@@ -26,7 +27,8 @@ jobs:
           - v1-dependencies-
       - run:
           name: Install native dependencies
-          command: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+          # command: sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
+          command: apk add libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
       - run: yarn install
 
       - save_cache:
@@ -36,11 +38,8 @@ jobs:
 
       # run tests!
       - run: yarn test
-
-
-
-      #deployment:
-      #  dockerhub:
-      #    branch: master
-      #    commands:
-      #      - $DOCKER_HUB_TRIGGER
+  #deploy:
+    #dockerhub:
+      #branch: master
+      #commands:
+        #- $DOCKER_HUB_TRIGGER
