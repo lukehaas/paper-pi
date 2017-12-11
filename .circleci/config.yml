@@ -8,12 +8,12 @@ jobs:
     docker:
       # specify the version you desire here
       - image: mhart/alpine-node:8
-      command: [apk add libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++]
+          command: [apk add libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++]
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mongo:3.4.4
-      command: [mongod]
+          command: [mongod]
 
     working_directory: ~/repo
 
