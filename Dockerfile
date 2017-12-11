@@ -1,6 +1,6 @@
-FROM mhart/alpine-node:8
+FROM ubuntu:16.04
 
-RUN apk add libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
+RUN sudo apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++
 
 WORKDIR /app
 ADD . .
