@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: mhart/alpine-node:8
+      - image: circleci/node:8.9
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -25,16 +25,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
-          name: Install Docker client
-          command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
-      - run:
           name: Install native dependencies
-          command: apk add libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
+          command: sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
       - run: yarn install
 
       - save_cache:
