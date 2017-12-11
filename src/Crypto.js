@@ -1,5 +1,6 @@
 const { path } = require('ramda')
 const  { Client } = require('coinbase')
+const { cryptoModel } = require('./models/model')
 
 module.exports = class Crypto {
   constructor() {
@@ -13,7 +14,19 @@ module.exports = class Crypto {
       this.client.getExchangeRates({ 'currency': coin }, (err, rates) => {
         const price = path(['data', 'rates', 'GBP'], rates)
         if(price) {
-          resolve(price)
+          resolve(cryptoModel.findOne((err, doc) => {
+            const coinLower = coin.toLowerCase()
+            if(doc === null) {
+              const data = {
+                [coinLower]: price
+              }
+              const newEntry = new cryptoModel(data)
+              newEntry.save()
+            } else {
+              doc[coinLower] = price
+              doc.save()
+            }
+          }).then(() => price))
         } else {
           reject(this._getPrevious)
         }
@@ -22,6 +35,6 @@ module.exports = class Crypto {
   }
 
   _getPrevious() {
-    console.log('get previous crypto')
+    return cryptoModel.findOne((err, doc) => doc)
   }
 }
