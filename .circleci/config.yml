@@ -45,7 +45,7 @@ jobs:
       - run: apt-get update && apt-get install -y curl
       - run:
           name: Trigger docker hub
-          command: curl -H "Content-Type:application/json" --data '{"build":true}' -X POST DOCKER_HUB_TRIGGER_URL
+          command: curl -H "Content-Type:application/json" --data '{"build":true}' -X POST $DOCKER_HUB_TRIGGER_URL
 
 workflows:
   version: 2
