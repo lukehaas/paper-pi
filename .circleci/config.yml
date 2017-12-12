@@ -41,7 +41,7 @@ jobs:
 
   deploy:
     docker:
-      - image: ubuntu:16.04
+      - image: lukehaas/paper-pi
     steps:
       - run:
           name: Trigger docker hub
