@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: ubuntu:16.04
+      - image: centos:centos6
       # - image: mhart/alpine-node:8
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -26,9 +26,11 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
       - run:
+          name: Add node to repo
+          command: curl -sL https://rpm.nodesource.com/setup_8.x | bash -
+      - run:
           name: Install native dependencies
-          command: apt-get update && apt-get -y install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ nodejs
-          # command: apk add libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev g++
+          command: yum install -y nodejs cairo cairo-devel libjpeg-turbo-devel pango pango-devel giflib-devel
       - run: npm i -g yarn
       - run: yarn install
 
