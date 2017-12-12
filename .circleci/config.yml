@@ -42,6 +42,7 @@ jobs:
     docker:
       -  image: ubuntu:16.04
     steps:
+      - run: apt-get update && apt-get install -y curl
       - run:
           name: Trigger docker hub
           command: $DOCKER_HUB_TRIGGER
