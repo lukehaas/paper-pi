@@ -38,6 +38,15 @@ jobs:
 
       # run tests!
       - run: yarn test
+
+  deploy:
+    docker:
+      - image: ubuntu:16.04
+    steps:
+      - run:
+          name: Trigger docker hub
+          command: $DOCKER_HUB_TRIGGER
+
   #deploy:
     #dockerhub:
       #branch: master
