@@ -28,10 +28,12 @@ jobs:
       - run:
           name: Add node to repo
           command: curl -sL https://rpm.nodesource.com/setup_8.x | bash -
-      - run: curl http://people.centos.org/tru/devtools-2/devtools-2.repo -o /etc/yum.repos.d/devtools-2.repo
+      - run: curl http://people.centos.org/tru/devtools-2/devtools-2.repo -o /etc/yum.repos.d/devtools-2.repo | bash -
       - run:
           name: Install native dependencies
-          command: yum install -y nodejs cairo cairo-devel libjpeg-turbo-devel pango pango-devel giflib-devel devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++ devtoolset-2-gcc-gfortran
+          command: yum install -y nodejs cairo cairo-devel libjpeg-turbo-devel pango pango-devel giflib-devel
+      - run: yum install -y devtoolset-2-gcc devtoolset-2-binutils
+      - run: yum install -y devtoolset-2-gcc-c++ devtoolset-2-gcc-gfortran
       - run: scl enable devtoolset-2 bash
       - run: source /opt/rh/devtoolset-2/enable
       - run: npm i -g yarn
