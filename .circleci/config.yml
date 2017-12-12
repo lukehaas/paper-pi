@@ -39,24 +39,23 @@ jobs:
       - run: yarn test
 
   deploy:
-    docker:
-      - image: lukehaas/paper-pi
+    machine: true
     steps:
       - run:
           name: Trigger docker hub
           command: $DOCKER_HUB_TRIGGER
 
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+#workflows:
+#  version: 2
+#  build-deploy:
+#    jobs:
+#      - build
+#      - deploy:
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              only: master
   #deploy:
     #dockerhub:
       #branch: master
