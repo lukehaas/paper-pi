@@ -61,6 +61,9 @@ module.exports = class Draw {
         const encodedBmp = bmp.encode(filteredImg).data
         resolve(encodedBmp)
       })
+      .catch(() => {
+        reject('Failed to draw image')
+      })
     })
 
 

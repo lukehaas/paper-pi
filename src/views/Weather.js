@@ -71,7 +71,9 @@ module.exports = class Weather {
           })
           resolve()
         })
-        .catch()
+        .catch(() => {
+          reject('Failed to load image')
+        })
       })
 
       //console.log(d)
@@ -81,11 +83,11 @@ module.exports = class Weather {
 
   _hour(data) {
     if(data.length < 5) return
-    data.slice(2, 5).forEach((h, i) => {
-      this.sctx.text({
+    //data.slice(2, 5).forEach((h) => {
+      //this.sctx.text({
 
-      })
-    })
+      //})
+    //})
   }
 
   _today(data) {
@@ -103,6 +105,9 @@ module.exports = class Weather {
           height: 122
         })
         resolve()
+      })
+      .catch(() => {
+        reject('Failed to load image')
       })
     })
   }
