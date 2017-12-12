@@ -1,7 +1,8 @@
-FROM centos:centos6
+FROM ubuntu:16.04
 
-RUN curl -sL https://rpm.nodesource.com/setup_8.x | bash -
-RUN yum install -y nodejs cairo cairo-devel libjpeg-turbo-devel pango pango-devel giflib-devel
+RUN apt-get update && apt-get install -y curl
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
 RUN npm i -g yarn
 RUN yarn install
 
