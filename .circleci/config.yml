@@ -39,23 +39,24 @@ jobs:
       - run: yarn test
 
   deploy:
-    machine: true
+    docker:
+      -  image: ubuntu:16.04
     steps:
       - run:
           name: Trigger docker hub
           command: $DOCKER_HUB_TRIGGER
 
-#workflows:
-#  version: 2
-#  build-deploy:
-#    jobs:
-#      - build
-#      - deploy:
-#          requires:
-#            - build
-#          filters:
-#            branches:
-#              only: master
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
   #deploy:
     #dockerhub:
       #branch: master
