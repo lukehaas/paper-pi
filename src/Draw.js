@@ -1,20 +1,24 @@
 const { createCanvas, registerFont } = require('canvas')
 const shapely = require('shapely-canvas')
-const Weather = require('./views/Weather')
+const Forecast = require('./views/Forecast')
+const Battery = require('./views/Battery')
+const Headlines = require('./views/Headlines')
+const Today = require('./views/Today')
+const Wotd = require('./views/Wotd')
+const Currency = require('./views/Currency')
 const bmp = require('bmp-js')
+const winston = require('winston')
 // Draw bitmaps by hand:
 //http://magazine.art21.org/2011/09/13/how-to-create-a-bitmap-image-file-by-hand-without-stencils
 module.exports = class Draw {
   constructor(options) {
-    this.orientation = options.orientation === 'landscape' ? 0 : 1
-    this.width = this.orientation === 0 ? 640 : 384
-    this.height = this.orientation === 0 ? 384 : 640
+    Object.assign(this, options)
+    this.width = this.orientation === 'landscape' ? 640 : 384
+    this.height = this.orientation === 'landscape' ? 384 : 640
     this.bg = '#000000'
     this.fg = '#FFFFFF'
     this.font = 'SourceCodePro-Regular'
-    //this.font = 'FiraSans'
 
-    registerFont('./assets/fonts/Fira_Sans/FiraSans-Regular.ttf', {family: 'FiraSans'})
     registerFont('./assets/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf', {family: 'SourceCodePro-Regular'})
 
     this.canvas = createCanvas(this.width, this.height)
@@ -22,8 +26,6 @@ module.exports = class Draw {
     //this.ctx.antialias = 'none'
     this.ctx.imageSmoothingEnabled = false
     this.sctx = shapely(this.ctx)
-
-    this.forecast = options.forecast
   }
 
   _drawBg() {
@@ -38,35 +40,42 @@ module.exports = class Draw {
 
   _filterImage(imgData) {
     const data = imgData.data.map(p => {
-      // using 40 as theshold
-      if(p < 40) {
+      const colourThreshold = 40
+      if(p < colourThreshold) {
         return 0
       } else {
         return 255
       }
     })
-    //return imgData
     return { width: this.width, height: this.height, data }
   }
 
   getImage() {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve) => {
       this._drawBg()
+      await new Battery({ x: this.width - 170, y: 5, ...this }).draw().catch(err => winston.log('error', err))
+      const today = await new Today({ x: 0, y: 0, ...this }).draw().catch(err => winston.log('error', err))
 
-      new Weather({ x: 0, y: 300, ...this }).draw()
-      .then(() => {
+      const headlines = await new Headlines({ x: 0, y: today.height, ...this }).draw().catch(err => winston.log('error', err))
+
+      await new Forecast({ x: 0, y: 300, ...this }).draw().catch(err => winston.log('error', err))
+
+      await new Wotd({ x: 0, y: headlines.height, ...this }).draw().catch(err => winston.log('error', err))
+
+      const btc = await new Currency({ x: this.width/2, y: headlines.height, coin: 'btc', ...this }).draw().catch(err => winston.log('error', err))
+      const eth = await new Currency({ x: this.width/2, y: btc.height, coin: 'eth', ...this }).draw().catch(err => winston.log('error', err))
+      await new Currency({ x: this.width/2, y: eth.height, coin: 'ltc', ...this }).draw().catch(err => winston.log('error', err))
+
+      //Promise.all([battery, headlines, forecast, today, wotd]).then(() => {
         const imgData = this.ctx.getImageData(0, 0, this.width, this.height)
         const filteredImg = this._filterImage(imgData)
 
         const encodedBmp = bmp.encode(filteredImg).data
         resolve(encodedBmp)
-      })
-      .catch(() => {
-        reject('Failed to draw image')
-      })
+      //})
+      //.catch(() => {
+        //reject('Failed to draw image')
+      //})
     })
-
-
-
   }
 }

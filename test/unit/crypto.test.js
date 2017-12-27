@@ -39,8 +39,8 @@ describe('Crypto', () => {
 
   describe('_getPrevious', () => {
     it('returns the previously stored price', async done => {
-      crypto._getPrevious().then(data => {
-        expect(data.complete).toBeTruthy()
+      crypto._getPrevious()().then(data => {
+        expect(data).toBeTruthy()
         expect(mongoose.model().findOne).toHaveBeenCalled()
         done()
       })

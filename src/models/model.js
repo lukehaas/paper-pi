@@ -20,14 +20,37 @@ const newsModel = () => {
 
 const cryptoModel = () => {
   const cryptoSchema = {
-    btc: String,
+    coin: String,
+    price: String,
     updatedOn: { type: Date, default: Date.now }
   }
   return mongoose.model('Crypto', cryptoSchema)
 }
 
+const wordModel = () => {
+  const wordSchema = {
+    word: String,
+    definition: String,
+    category: String,
+    pronunciation: String,
+    updatedOn: { type: Date, default: Date.now }
+  }
+  return mongoose.model('Word', wordSchema)
+}
+
+const systemModel = () => {
+  const systemSchema = {
+    charge: Number,
+    chargedOn: Date,
+    updatedOn: { type: Date, default: Date.now }
+  }
+  return mongoose.model('System', systemSchema)
+}
+
 module.exports = {
   weatherModel: weatherModel(),
   newsModel: newsModel(),
-  cryptoModel: cryptoModel()
+  cryptoModel: cryptoModel(),
+  wordModel: wordModel(),
+  systemModel: systemModel()
 }

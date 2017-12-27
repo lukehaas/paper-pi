@@ -1,6 +1,8 @@
 const Twit = require('twit')
 const Dictionary = require('oxford-dictionary-api')
 const { path, compose } = require('ramda')
+const { wordModel } = require('./models/model')
+const config = require('./config')
 
 module.exports = class Word {
   constructor() {
@@ -9,14 +11,24 @@ module.exports = class Word {
       consumer_secret: process.env.twitter_consumer_secret,
       access_token: process.env.twitter_access_token,
       access_token_secret: process.env.twitter_access_token_secret,
-      timeout_ms: 3000
+      timeout_ms: config.timeout
     })
     this.dict = new Dictionary(process.env.dictionary_app_id, process.env.dictionary_app_key)
   }
 
+  _timer(reject) {
+    return setTimeout(reject => {
+      reject(new Error('timeout'))
+    }, config.timeout*2, reject)
+  }
+
+  _clearTimer() {
+    clearTimeout(this.timeout)
+  }
+
   _getTweets(callback, error) {
     return this.Twit.get('statuses/user_timeline', { screen_name: 'OxfordWords',
-    count: 10,
+    count: 50,
     exclude_replies: true,
     include_rts: false }, (err, data) => {
       if(!err) {
@@ -29,13 +41,42 @@ module.exports = class Word {
 
   _getWordFromTweets(data) {
     const predicate = 'Word of the Day:'
-    return data.find(tweet => {
+    const tweet = data.find(tweet => {
       return tweet.text.indexOf(predicate) === 0
-    }).text.match(/^(.*)$/m)[0].replace(predicate, '').trim()
+    })
+    return tweet && tweet.text.match(/^(.*)$/m)[0].replace(predicate, '').trim()
   }
 
   _upperCaseFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
+    return typeof str === 'string' && str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
+  _lookupWord(word, resolve, reject) {
+    this.dict.find(word, (err, data) => {
+      const category = path(['results', 0, 'lexicalEntries', 0, 'lexicalCategory'], data)
+      const pronunciation = path(['results', 0, 'lexicalEntries', 0, 'pronunciations', 0, 'phoneticSpelling'], data)
+      const definition = path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
+      this._clearTimer()
+      if(category && pronunciation && definition) {
+        const wordOfTheDay = {
+          word,
+          definition,
+          category,
+          pronunciation
+        }
+        resolve(wordModel.findOne((err, doc) => {
+          if(doc === null) {
+            const newEntry = new wordModel(wordOfTheDay)
+            newEntry.save()
+          } else {
+            Object.assign(doc, wordOfTheDay)
+            doc.save()
+          }
+        }).then(() => wordOfTheDay))
+      } else {
+        reject(this._getPrevious)
+      }
+    })
   }
 
   _getDefinition() {
@@ -43,23 +84,14 @@ module.exports = class Word {
       this._getTweets(response => {
         const getFormattedWord = compose(this._upperCaseFirstLetter, this._getWordFromTweets)
         const word = getFormattedWord(response)
-        this.dict.find(word, (erro, data) => {
-          const def = path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
-          clearTimeout(this.timeout)
-          if(def) {
-            resolve(`${word} - ${def}`)
-          } else {
-            reject('Dictionary fail')
-          }
-        })
+        if(word) {
+          this._lookupWord(word, resolve, reject)
+        } else {
+          this._clearTimer()
+          reject(this._getPrevious)
+        }
       }, reject)
     })
-  }
-
-  _timer(reject) {
-    return setTimeout(reject => {
-      reject(new Error('timeout'))
-    }, 6000, reject)
   }
 
   getWord() {
@@ -69,10 +101,10 @@ module.exports = class Word {
       new Promise((_, reject) => {
         this.timeout = this._timer(reject)
       })
-    ]).catch()
+    ]).catch(this._getPrevious)
   }
 
-  getPrevious() {
-    console.log('get previous')
+  _getPrevious() {
+    return wordModel.findOne((err, doc) => doc)
   }
 }

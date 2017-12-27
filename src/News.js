@@ -1,5 +1,6 @@
 const fetch = require('node-fetch')
 const { newsModel } = require('./models/model')
+const config = require('./config')
 
 module.exports = class News {
   constructor() {
@@ -9,7 +10,7 @@ module.exports = class News {
   getHeadlines() {
     const key = this.apiKey
     const url = `https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${key}`
-    return fetch(url, { timeout: 3000 })
+    return fetch(url, { timeout: config.timeout })
       .then(response => {
         return response.json()
       })
@@ -19,7 +20,7 @@ module.exports = class News {
             const newEntry = new newsModel(data)
             newEntry.save()
           } else if (data.hasOwnProperty('articles')) {
-            doc.articles = data
+            doc.articles = data.articles
             doc.save()
           }
         }).then(() => data)

@@ -11,7 +11,7 @@ const winston = require('winston')
 require('dotenv').config()
 mongoose.Promise = global.Promise
 
-async function init() {
+const init = () => new Promise((resolve, reject) => {
   winston.add(winston.transports.File, { filename: 'error.log' })
   mongoose.connect(process.env.mongo_uri, { useMongoClient: true }, err => {
     if(err) {
@@ -24,23 +24,24 @@ async function init() {
   const weather = new Weather()
   const word = new Word()
   //const alexa = new Alexa()
-
-  //const bitcoin = 'test1'
-  //const forecast = 'test2'
-  //const wotd = 'test3'
-  const shoppingList = 'test4'
-  //const headlines = 'test5'
-
-  const charge = system.getCharge()
-  const headlines = await news.getHeadlines().catch(err => { winston.log('error', 'Failed to get news data %s', err) })
-  const bitcoin = await crypto.getPrice('BTC').catch(err => { winston.log('error', 'Failed to get crypto data %s', err) })
-  const forecast = await weather.getForecast({ latitude: 51.5074, longitude: 0.1278 }).catch(err => { winston.log('error', 'Failed to get weather data %s', err) })
-  const wotd = await word.getWord().catch(err => { winston.log('error', 'Failed to get word data %s', err) })
-  //const shoppingList = await alexa.getShoppingList().catch(e => console.log(e))
-
-  return { charge, headlines, bitcoin, forecast, wotd, shoppingList }
-}
-
+  Promise.all([
+    system.getCharge().catch(err => { winston.log('error', 'Failed to get battery charge %s', err) }),
+    system.getUptime().catch(err => { winston.log('error', 'Failed to get uptime %s', err) }),
+    news.getHeadlines().catch(err => { winston.log('error', 'Failed to get news data %s', err) }),
+    crypto.getPrice('BTC').catch(err => { winston.log('error', 'Failed to get BTC price %s', err) }),
+    crypto.getPrice('ETH').catch(err => { winston.log('error', 'Failed to get ETH price %s', err) }),
+    crypto.getPrice('LTC').catch(err => { winston.log('error', 'Failed to get LTC price %s', err) }),
+    weather.getForecast({ latitude: 51.5074, longitude: 0.1278 }).catch(err => { winston.log('error', 'Failed to get weather data %s', err) }),
+    word.getWord().catch(err => { winston.log('error', 'Failed to get word data %s', err) })
+  ]).then(data => {
+    const keys = [ 'charge', 'uptime', 'headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'shoppingList' ]
+    resolve(data.reduce((obj, d, i) => {
+      obj[keys[i]] = d
+      return obj
+    }, {}))
+  })
+  .catch(reject)
+})
 
 
 // date
@@ -55,12 +56,10 @@ init().then(drawImage).then(image => {
   fs.mkdir('./build', () => {
     fs.writeFile('./build/image.bmp', image,  err => {
       if(err) {
-        winston.log('error', 'Failed to write image %s', err)
+        winston.log('error', 'Failed to write image - %s', err)
       }
     })
   })
-
-  //console.log(image)
-}).catch(() => {
-  winston.log('error', 'Failed to initialize')
+}).catch(err => {
+  winston.log('error', 'Failed to initialize - %s', err)
 })
