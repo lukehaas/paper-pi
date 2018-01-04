@@ -9,7 +9,8 @@
   "license": "GPL",
   "scripts": {
     "test": "jest --verbose",
-    "lint": "eslint index.js \"src/**/*.js\""
+    "lint": "eslint index.js \"src/**/*.js\"",
+    "build": "node ./bin/index.js"
   },
   "dependencies": {
     "alexa-sdk": "^1.0.20",
