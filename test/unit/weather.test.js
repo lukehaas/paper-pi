@@ -1,5 +1,5 @@
 jest.mock('dark-sky')
-const Weather = require('../../src/Weather')
+const Weather = require('../../src/data-sources/Weather')
 const DarkSky = require('dark-sky')
 const mongoose = require('mongoose')
 const dsGet = jest.fn(() => new Promise(resolve => resolve({ 'currently': [true] })))

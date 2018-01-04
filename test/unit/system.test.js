@@ -1,6 +1,6 @@
 jest.mock('battery-level')
 jest.mock('../../src/models/model')
-const System = require('../../src/System')
+const System = require('../../src/data-sources/System')
 const { systemModel } = require('../../src/models/model')
 const batteryLevel = require('battery-level')
 const moment = require('moment')

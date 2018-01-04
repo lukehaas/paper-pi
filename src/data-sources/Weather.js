@@ -1,7 +1,7 @@
 const DarkSky = require('dark-sky')
 const { pick, path } = require('ramda')
-const { weatherModel } = require('./models/model')
-const config = require('./config')
+const { weatherModel } = require('../models/model')
+const config = require('../config')
 
 module.exports = class Weather {
   constructor() {

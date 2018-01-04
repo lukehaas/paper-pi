@@ -2,7 +2,6 @@
   "name": "paper-pi",
   "version": "1.0.0",
   "main": "index.js",
-  "bin": "./bin/index.js",
   "repository": "git@github.com:lukehaas/paper-pi.git",
   "author": "lukehaas <lukehaas@users.noreply.github.com>",
   "private": true,
@@ -10,7 +9,7 @@
   "scripts": {
     "test": "jest --verbose",
     "lint": "eslint index.js \"src/**/*.js\"",
-    "build": "node ./bin/index.js"
+    "build": "node ./src/index.js"
   },
   "dependencies": {
     "alexa-sdk": "^1.0.20",

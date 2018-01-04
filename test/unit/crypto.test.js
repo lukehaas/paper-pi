@@ -1,5 +1,5 @@
 jest.mock('coinbase')
-const Crypto = require('../../src/Crypto')
+const Crypto = require('../../src/data-sources/Crypto')
 const  { Client } = require('coinbase')
 const mongoose = require('mongoose')
 const rates = {

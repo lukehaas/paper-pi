@@ -1,8 +1,8 @@
 const Twit = require('twit')
 const Dictionary = require('oxford-dictionary-api')
 const { path, compose } = require('ramda')
-const { wordModel } = require('./models/model')
-const config = require('./config')
+const { wordModel } = require('../models/model')
+const config = require('../config')
 
 module.exports = class Word {
   constructor() {

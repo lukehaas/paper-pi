@@ -1,5 +1,5 @@
 jest.mock('node-fetch')
-const News = require('../../src/News')
+const News = require('../../src/data-sources/News')
 const fetch = require('node-fetch')
 const mongoose = require('mongoose')
 

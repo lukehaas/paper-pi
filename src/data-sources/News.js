@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
-const { newsModel } = require('./models/model')
-const config = require('./config')
+const { newsModel } = require('../models/model')
+const config = require('../config')
 
 module.exports = class News {
   constructor() {

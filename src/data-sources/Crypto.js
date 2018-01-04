@@ -1,7 +1,7 @@
 const { path } = require('ramda')
 const  { Client } = require('coinbase')
-const { cryptoModel } = require('./models/model')
-const config = require('./config')
+const { cryptoModel } = require('../models/model')
+const config = require('../config')
 
 module.exports = class Crypto {
   constructor() {

@@ -1,6 +1,6 @@
 const batteryLevel = require('battery-level')
 const moment = require('moment')
-const { systemModel } = require('./models/model')
+const { systemModel } = require('../models/model')
 
 module.exports = class System {
   constructor() {}

@@ -1,6 +1,6 @@
 jest.mock('twit')
 jest.mock('oxford-dictionary-api')
-const Word = require('../../src/Word')
+const Word = require('../../src/data-sources/Word')
 const Twit = require('twit')
 const Dictionary = require('oxford-dictionary-api')
 

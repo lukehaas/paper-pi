@@ -1,10 +1,5 @@
-const Weather = require('../src/Weather')
-const Crypto = require('../src/Crypto')
-const Word = require('../src/Word')
-//const Alexa = require('../src/Alexa')
-const System = require('../src/System')
-const News = require('../src/News')
-const Draw = require('../src/Draw')
+const { Weather, Crypto, Word, System, News } = require('./data-sources/index')
+const Draw = require('./ui/Draw')
 const mongoose = require('mongoose')
 const fs = require('fs')
 const winston = require('winston')
@@ -48,8 +43,8 @@ const init = () => new Promise((resolve, reject) => {
 // days since charge
 // note of the day
 // tube/bus status?
-async function drawImage(data) {
-  return await new Draw({ orientation: 'portrait', ...data }).getImage()
+function drawImage(data) {
+  return new Draw({ orientation: 'portrait', ...data }).getImage()
 }
 init().then(drawImage).then(image => {
   mongoose.disconnect()
