@@ -13,7 +13,7 @@ module.exports = class Currency {
       this.sctx.text({
         x: x + 25,
         y: y + 13,
-        value: parseFloat(price).toLocaleString(),
+        value: `£${parseFloat(price).toLocaleString()}`,
         style: { font: `13px "${this.font}"`, fill: this.fg }
       })
       loadImage(imagePath).then(image => {
