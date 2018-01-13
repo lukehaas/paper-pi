@@ -44,6 +44,9 @@ const init = () => new Promise((resolve, reject) => {
 // note of the day
 // tube/bus status?
 function drawImage(data) {
+  if(data.charge < 0.05) {
+    data.lowPower = true
+  }
   return new Draw({ orientation: 'portrait', ...data }).getImage()
 }
 init().then(drawImage).then(image => {

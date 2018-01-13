@@ -1,4 +1,3 @@
-
 module.exports = class Battery {
   constructor(options) {
     Object.assign(this, options)
@@ -77,7 +76,11 @@ module.exports = class Battery {
       winston.log('error', 'Battery values not present')
       return
     }
-    this._cell(this.x + 120, this.y, 30)
-    this._uptime(this.x, this.y)
+    if(this.lowPower) {
+      this._cell(this.x, this.y, 300)
+    } else {
+      this._cell(this.x + 120, this.y, 30)
+      this._uptime(this.x, this.y)
+    }
   }
 }

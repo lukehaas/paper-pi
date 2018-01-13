@@ -50,32 +50,37 @@ module.exports = class Draw {
     return { width: this.width, height: this.height, data }
   }
 
+  async _drawImage() {
+    await new Battery({ x: this.width - 170, y: 5, ...this }).draw().catch(err => winston.log('error', err))
+    const today = await new Today({ x: 0, y: 0, ...this }).draw().catch(err => winston.log('error', err))
+
+    const headlines = await new Headlines({ x: 0, y: today.height, ...this }).draw().catch(err => winston.log('error', err))
+
+    await new Forecast({ x: 0, y: 300, ...this }).draw().catch(err => winston.log('error', err))
+
+    await new Wotd({ x: 0, y: headlines.height, ...this }).draw().catch(err => winston.log('error', err))
+
+    const btc = await new Currency({ x: this.width/2, y: headlines.height, coin: 'btc', ...this }).draw().catch(err => winston.log('error', err))
+    const eth = await new Currency({ x: this.width/2, y: btc.height, coin: 'eth', ...this }).draw().catch(err => winston.log('error', err))
+    await new Currency({ x: this.width/2, y: eth.height, coin: 'ltc', ...this }).draw().catch(err => winston.log('error', err))
+  }
+
+  async _drawLowPowerImage() {
+    await new Battery({ x: 32, y: 245, ...this }).draw().catch(err => winston.log('error', err))
+  }
+
   getImage() {
     return new Promise(async (resolve) => {
       this._drawBg()
-      await new Battery({ x: this.width - 170, y: 5, ...this }).draw().catch(err => winston.log('error', err))
-      const today = await new Today({ x: 0, y: 0, ...this }).draw().catch(err => winston.log('error', err))
-
-      const headlines = await new Headlines({ x: 0, y: today.height, ...this }).draw().catch(err => winston.log('error', err))
-
-      await new Forecast({ x: 0, y: 300, ...this }).draw().catch(err => winston.log('error', err))
-
-      await new Wotd({ x: 0, y: headlines.height, ...this }).draw().catch(err => winston.log('error', err))
-
-      const btc = await new Currency({ x: this.width/2, y: headlines.height, coin: 'btc', ...this }).draw().catch(err => winston.log('error', err))
-      const eth = await new Currency({ x: this.width/2, y: btc.height, coin: 'eth', ...this }).draw().catch(err => winston.log('error', err))
-      await new Currency({ x: this.width/2, y: eth.height, coin: 'ltc', ...this }).draw().catch(err => winston.log('error', err))
-
-      //Promise.all([battery, headlines, forecast, today, wotd]).then(() => {
-        const imgData = this.ctx.getImageData(0, 0, this.width, this.height)
-        const filteredImg = this._filterImage(imgData)
-
-        const encodedBmp = bmp.encode(filteredImg).data
-        resolve(encodedBmp)
-      //})
-      //.catch(() => {
-        //reject('Failed to draw image')
-      //})
+      if(this.lowPower) {
+        await this._drawLowPowerImage()
+      } else {
+        await this._drawImage()
+      }
+      const imgData = this.ctx.getImageData(0, 0, this.width, this.height)
+      const filteredImg = this._filterImage(imgData)
+      const encodedBmp = bmp.encode(filteredImg).data
+      resolve(encodedBmp)      
     })
   }
 }
