@@ -1,4 +1,4 @@
-const { Weather, Crypto, Word, System, News } = require('./data-sources/index')
+const { Weather, Crypto, Word, System, News, Notes } = require('./data-sources/index')
 const Draw = require('./ui/Draw')
 const mongoose = require('mongoose')
 const fs = require('fs')
@@ -18,6 +18,7 @@ const init = () => new Promise((resolve, reject) => {
   const crypto = new Crypto()
   const weather = new Weather()
   const word = new Word()
+  //const notes = new Notes()
   //const alexa = new Alexa()
   Promise.all([
     system.getCharge().catch(err => { winston.log('error', 'Failed to get battery charge %s', err) }),

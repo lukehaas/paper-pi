@@ -13,7 +13,7 @@ module.exports = class Forecast {
       const dayWidth = this.width * 0.125
       const dayHeight = 75
       const gap = this.width * 0.016
-      const y = this.y + 260
+      const y = this.y + 140
       const yPos = {
         container: y,
         day: y + 15,
@@ -81,26 +81,26 @@ module.exports = class Forecast {
           reject('Failed to load image')
         })
       })
-
-      //console.log(d)
-      // summary, icon, temperatureLow, temperatureHigh
     })
   }
-
-  _hour(data) {
+  
+  _hourColumn(x, y, data) {
     return new Promise((resolve, reject) => {
-      const y = this.y + 100
       const yPos = {
         time: y + 20,
         image: y,
         temp: y + 20
       }
-      if(data.length < 8) return
-      data.slice(1, 7).forEach((h, i) => {
+      const xPos = {
+        time: x,
+        image: x + 40,
+        temp: x + 70
+      }
+      data.forEach((h, i) => {
         // time
         const hour = moment.unix(h.time).format('H:mm')
         this.sctx.text({
-          x: 240,
+          x: xPos.time,
           y: yPos.time + (i*25),
           value: hour,
           style: { font: `11px "${this.font}"`, fill: this.fg }
@@ -109,7 +109,7 @@ module.exports = class Forecast {
         loadImage(this._getImagePath(h.icon, false)).then((image) => {
           this.sctx.image({
             image,
-            x: 280,
+            x: xPos.image,
             y: yPos.image + (i*25),
             width: 25,
             height: 25
@@ -121,7 +121,7 @@ module.exports = class Forecast {
         })
         // temperature
         this.sctx.text({
-          x: 310,
+          x: xPos.temp,
           y: yPos.temp + (i*25),
           value: `${Math.round(h.temperature)}°`,
           style: { font: `11px "${this.font}"`, fill: this.fg }
@@ -130,9 +130,25 @@ module.exports = class Forecast {
     })
   }
 
+  _hour(data) {
+    return new Promise((resolve) => {
+      if(data.length < 8) return
+      const x = 170
+      const y = this.y
+
+      const colOne = data.slice(1, 6)
+      const colTwo = data.slice(6, 11)
+      this._hourColumn(x, y, colOne).then(() => {
+        this._hourColumn(x + 110, y, colTwo).then(() => {
+          resolve()
+        })
+      })
+    })
+  }
+
   _today(data) {
     return new Promise((resolve, reject) => {
-      const y = this.y + 120
+      const y = this.y + 20
       const yPos = {
         location: y,
         summary: y + 20,
@@ -141,7 +157,7 @@ module.exports = class Forecast {
       }
       // Location
       this.sctx.text({
-        x: 10,
+        x: 8,
         y: yPos.location,
         value: 'London',
         style: { font: `16px "${this.font}"`, fill: this.fg }
@@ -149,7 +165,7 @@ module.exports = class Forecast {
 
       //Current weather summary
       this.sctx.text({
-        x: 10,
+        x: 8,
         y: yPos.summary,
         value: data.summary,
         maxWidth: 115,
@@ -158,7 +174,7 @@ module.exports = class Forecast {
 
       // current temperature
       this.sctx.text({
-        x: 100,
+        x: 113,
         y: yPos.temp,
         value: `${Math.round(data.temperature)}°`,
         style: { font: `26px "${this.font}"`, fill: this.fg }
@@ -167,10 +183,10 @@ module.exports = class Forecast {
       loadImage(this._getImagePath(data.icon, true)).then((image) => {
         this.sctx.image({
           image,
-          x: 10,
+          x: 8,
           y: yPos.image,
-          width: 95,
-          height: 95
+          width: 85,
+          height: 85
         })
         resolve()
       })

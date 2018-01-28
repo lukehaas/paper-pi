@@ -6,10 +6,11 @@ module.exports = class Headlines {
   }
 
   _newsList(data) {
-    const gap = 8
-    const x = this.x + 9
+    const gap = 12
+    const x = this.x + 8
     const y = this.y
-    const maxWidth = this.width/2
+    const maxWidth = this.width/2 - x
+    const limit = 5
     this.sctx.text({
       x,
       y,
@@ -19,7 +20,7 @@ module.exports = class Headlines {
         font: `13px "${this.font}"`, fill: this.fg
       }
     })
-    return data.slice(0, 5).reduce((y, n) => {
+    return data.slice(0, limit).reduce((y, n, i) => {
       const text = {
         x,
         y,
@@ -33,19 +34,20 @@ module.exports = class Headlines {
       this.sctx.text(text)
 
       y += this.sctx.textHeight(text)
-      this.sctx.line({
-        x,
-        y: y + 6,
-        width: maxWidth,
-        dashWidth: 2,
-        dashGap: 2,
-        style: {
-          strokeStyle: 'dashed',
-          strokeColor: this.fg,
-          strokeWidth: 1
-        }
-      })
-
+      if(i < limit - 1) {
+        this.sctx.line({
+          x,
+          y: y + 8,
+          width: maxWidth,
+          dashWidth: 2,
+          dashGap: 2,
+          style: {
+            strokeStyle: 'dashed',
+            strokeColor: this.fg,
+            strokeWidth: 1
+          }
+        })
+      }
       return y += gap
     }, y + 8)
   }

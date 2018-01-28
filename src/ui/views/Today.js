@@ -7,7 +7,7 @@ module.exports = class Today {
 
   _date() {
     const x = this.x + 8
-    const y = this.y + 8
+    const y = this.y + 6
     const month = moment().format('MMM')
     const day = moment().format('DD')
 
@@ -16,7 +16,7 @@ module.exports = class Today {
       y: y + 8,
       baseline: 'top',
       value: day,
-      style: { font: `46px "${this.font}"`, fill: this.fg }
+      style: { font: `39px "${this.font}"`, fill: this.fg }
     }
     const monthText = {
       x,
@@ -34,7 +34,7 @@ module.exports = class Today {
     this.sctx.text(monthText)
     this.sctx.text(dayText)
 
-    return y + 80
+    return y + 72
   }
 
   async draw() {

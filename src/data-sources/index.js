@@ -4,11 +4,13 @@ const Word = require('./Word')
 //const Alexa = require('./Alexa')
 const System = require('./System')
 const News = require('./News')
+const Notes = require('./Notes')
 
 module.exports = {
   Weather,
   Crypto,
   Word,
   System,
-  News
+  News,
+  Notes
 }
