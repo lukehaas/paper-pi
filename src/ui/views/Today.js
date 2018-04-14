@@ -6,7 +6,7 @@ module.exports = class Today {
   }
 
   _date() {
-    const x = this.x + 8
+    const x = this.x + 14
     const y = this.y + 6
     const month = moment().format('MMM')
     const day = moment().format('DD')

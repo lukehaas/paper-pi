@@ -5,6 +5,7 @@ const Word = require('./Word')
 const System = require('./System')
 const News = require('./News')
 const Notes = require('./Notes')
+const Tfl = require('./Tfl')
 
 module.exports = {
   Weather,
@@ -12,5 +13,6 @@ module.exports = {
   Word,
   System,
   News,
-  Notes
+  Notes,
+  Tfl
 }

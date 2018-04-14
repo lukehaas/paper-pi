@@ -12,8 +12,8 @@ module.exports = class Forecast {
     return new Promise((resolve, reject) => {
       const dayWidth = this.width * 0.125
       const dayHeight = 75
-      const gap = this.width * 0.016
-      const y = this.y + 140
+      const gap = this.width * 0.015
+      const y = this.y + 130
       const yPos = {
         container: y,
         day: y + 15,
@@ -22,7 +22,7 @@ module.exports = class Forecast {
       }
 
       data.slice(1, 8).forEach((d, i) => {
-        const x = this.x + (i*dayWidth) + (gap * i) + gap
+        const x = this.x + (i*dayWidth) + (gap * i) + gap + 7
         const day = moment.unix(d.time).format('ddd')
         const dayTxtWidth = this.sctx.textWidth({
           value: day,
@@ -133,7 +133,7 @@ module.exports = class Forecast {
   _hour(data) {
     return new Promise((resolve) => {
       if(data.length < 8) return
-      const x = 170
+      const x = this.x + 178
       const y = this.y
 
       const colOne = data.slice(1, 6)
@@ -149,15 +149,16 @@ module.exports = class Forecast {
   _today(data) {
     return new Promise((resolve, reject) => {
       const y = this.y + 20
+      const x = this.x + 14
       const yPos = {
         location: y,
         summary: y + 20,
         temp: y + 10,
-        image: y + 30
+        image: y + 28
       }
       // Location
       this.sctx.text({
-        x: 8,
+        x,
         y: yPos.location,
         value: 'London',
         style: { font: `16px "${this.font}"`, fill: this.fg }
@@ -165,7 +166,7 @@ module.exports = class Forecast {
 
       //Current weather summary
       this.sctx.text({
-        x: 8,
+        x,
         y: yPos.summary,
         value: data.summary,
         maxWidth: 115,
@@ -174,7 +175,7 @@ module.exports = class Forecast {
 
       // current temperature
       this.sctx.text({
-        x: 113,
+        x: x + 105,
         y: yPos.temp,
         value: `${Math.round(data.temperature)}°`,
         style: { font: `26px "${this.font}"`, fill: this.fg }
@@ -183,7 +184,7 @@ module.exports = class Forecast {
       loadImage(this._getImagePath(data.icon, true)).then((image) => {
         this.sctx.image({
           image,
-          x: 8,
+          x,
           y: yPos.image,
           width: 85,
           height: 85

@@ -7,9 +7,9 @@ module.exports = class Headlines {
 
   _newsList(data) {
     const gap = 12
-    const x = this.x + 8
+    const x = this.x + 14
     const y = this.y
-    const maxWidth = this.width/2 - x
+    const maxWidth = this.width - x
     const limit = 5
     this.sctx.text({
       x,
@@ -28,7 +28,7 @@ module.exports = class Headlines {
         maxWidth,
         baseline: 'top',
         style: {
-          font: `13px "${this.font}"`, fill: this.fg
+          font: `12px "${this.font}"`, fill: this.fg
         }
       }
       this.sctx.text(text)
@@ -55,9 +55,9 @@ module.exports = class Headlines {
   async draw() {
     if(!Array.isArray(this.headlines.articles)) {
       winston.log('error', 'Headlines - articles not array')
-      return { height: 0 }
+      return { height: this.y }
     }
-    const height = this._newsList(this.headlines.articles)
+    const height = 12 + this._newsList(this.headlines.articles)
 
     return { height }
   }

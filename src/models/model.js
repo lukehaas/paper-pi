@@ -47,10 +47,19 @@ const systemModel = () => {
   return mongoose.model('System', systemSchema)
 }
 
+const tflModel = () => {
+  const tflSchema = {
+    statuses: Object,
+    updatedOn: { type: Date, default: Date.now }
+  }
+  return mongoose.model('Tfl', tflSchema)
+}
+
 module.exports = {
   weatherModel: weatherModel(),
   newsModel: newsModel(),
   cryptoModel: cryptoModel(),
   wordModel: wordModel(),
-  systemModel: systemModel()
+  systemModel: systemModel(),
+  tflModel: tflModel()
 }

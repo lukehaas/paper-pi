@@ -1,4 +1,10 @@
-const { Weather, Crypto, Word, System, News, Notes } = require('./data-sources/index')
+const { Weather,
+  Crypto,
+  Word,
+  System,
+  News,
+  Notes,
+  Tfl } = require('./data-sources/index')
 const Draw = require('./ui/Draw')
 const mongoose = require('mongoose')
 const fs = require('fs')
@@ -18,6 +24,7 @@ const init = () => new Promise((resolve, reject) => {
   const crypto = new Crypto()
   const weather = new Weather()
   const word = new Word()
+  const tfl = new Tfl()
   //const notes = new Notes()
   //const alexa = new Alexa()
   Promise.all([
@@ -28,9 +35,10 @@ const init = () => new Promise((resolve, reject) => {
     crypto.getPrice('ETH').catch(err => { winston.log('error', 'Failed to get ETH price %s', err) }),
     crypto.getPrice('LTC').catch(err => { winston.log('error', 'Failed to get LTC price %s', err) }),
     weather.getForecast({ latitude: 51.5074, longitude: 0.1278 }).catch(err => { winston.log('error', 'Failed to get weather data %s', err) }),
-    word.getWord().catch(err => { winston.log('error', 'Failed to get word data %s', err) })
+    word.getWord().catch(err => { winston.log('error', 'Failed to get word data %s', err) }),
+    tfl.getLineStatus().catch(err => { winston.log('error', 'Failed to get TFL line status %s', err) })
   ]).then(data => {
-    const keys = [ 'charge', 'uptime', 'headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'shoppingList' ]
+    const keys = [ 'charge', 'uptime', 'headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'tubeStatus' ]
     resolve(data.reduce((obj, d, i) => {
       obj[keys[i]] = d
       return obj
@@ -53,7 +61,7 @@ function drawImage(data) {
 init().then(drawImage).then(image => {
   mongoose.disconnect()
   fs.mkdir('./build', () => {
-    fs.writeFile('./build/image.bmp', image,  err => {
+    fs.writeFile('./build/monocolor.bmp', image,  err => {
       if(err) {
         winston.log('error', 'Failed to write image - %s', err)
       }
