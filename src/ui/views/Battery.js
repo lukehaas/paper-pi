@@ -1,3 +1,5 @@
+const winston = require('winston')
+
 module.exports = class Battery {
   constructor(options) {
     Object.assign(this, options)
