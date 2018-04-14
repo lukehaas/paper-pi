@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:3.2
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    expose:
+      - "27017"
+  app:
+    image: lukehaas/paper-pi
+    ports:
+      - "8000:8000"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    env_file:
+      - ./.env
+volumes:
+  mongo-data:
