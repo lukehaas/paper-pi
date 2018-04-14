@@ -16,4 +16,4 @@ RUN yarn install
 #VOLUME /data/db
 EXPOSE 8000
 
-CMD node ./index.js
+CMD /bin/bash
