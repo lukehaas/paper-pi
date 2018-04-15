@@ -19,7 +19,7 @@ const init = () => new Promise((resolve, reject) => {
       winston.log('error', 'Connection to MongoDB failed %s', err)
     }
   })
-  const system = new System()
+  // const system = new System()
   const news = new News()
   const crypto = new Crypto()
   const weather = new Weather()
@@ -28,8 +28,8 @@ const init = () => new Promise((resolve, reject) => {
   //const notes = new Notes()
   //const alexa = new Alexa()
   Promise.all([
-    system.getCharge().catch(err => { winston.log('error', 'Failed to get battery charge %s', err) }),
-    system.getUptime().catch(err => { winston.log('error', 'Failed to get uptime %s', err) }),
+    // system.getCharge().catch(err => { winston.log('error', 'Failed to get battery charge %s', err) }),
+    // system.getUptime().catch(err => { winston.log('error', 'Failed to get uptime %s', err) }),
     news.getHeadlines().catch(err => { winston.log('error', 'Failed to get news data %s', err) }),
     crypto.getPrice('BTC').catch(err => { winston.log('error', 'Failed to get BTC price %s', err) }),
     crypto.getPrice('ETH').catch(err => { winston.log('error', 'Failed to get ETH price %s', err) }),
@@ -38,7 +38,8 @@ const init = () => new Promise((resolve, reject) => {
     word.getWord().catch(err => { winston.log('error', 'Failed to get word data %s', err) }),
     tfl.getLineStatus().catch(err => { winston.log('error', 'Failed to get TFL line status %s', err) })
   ]).then(data => {
-    const keys = [ 'charge', 'uptime', 'headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'tubeStatus' ]
+    // 'charge', 'uptime',
+    const keys = [ 'headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'tubeStatus' ]
     resolve(data.reduce((obj, d, i) => {
       obj[keys[i]] = d
       return obj

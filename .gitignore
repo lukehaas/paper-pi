@@ -64,3 +64,5 @@ weather_download.psd
 build/
 hidden/
 error.log
+
+.serverless
