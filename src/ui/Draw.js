@@ -1,4 +1,7 @@
+const bmp = require('bmp-js')
+const winston = require('winston')
 const { createCanvas, registerFont, Image } = require('canvas')
+const path = require('path')
 const shapely = require('shapely-canvas')
 const Forecast = require('./views/Forecast')
 const Battery = require('./views/Battery')
@@ -7,8 +10,6 @@ const Today = require('./views/Today')
 const Wotd = require('./views/Wotd')
 const Currency = require('./views/Currency')
 const TubeStatus = require('./views/TubeStatus')
-const bmp = require('bmp-js')
-const winston = require('winston')
 // Draw bitmaps by hand:
 //http://magazine.art21.org/2011/09/13/how-to-create-a-bitmap-image-file-by-hand-without-stencils
 module.exports = class Draw {
@@ -21,8 +22,7 @@ module.exports = class Draw {
     this.bg = '#000000'
     this.fg = '#FFFFFF'
     this.font = 'SourceCodePro-Regular'
-
-    registerFont('./assets/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf', {family: 'SourceCodePro-Regular'})
+    registerFont(path.join(__dirname, '../../', 'assets/fonts/Source_Code_Pro/SourceCodePro-Regular.ttf'), {family: 'SourceCodePro-Regular'})
 
     this.canvas = createCanvas(this.width, this.height)
     this.imageCanvas = createCanvas(this.imageWidth, this.imageHeight)

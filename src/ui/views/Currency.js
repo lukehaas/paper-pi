@@ -1,5 +1,6 @@
 const { loadImage } = require('canvas')
 const winston = require('winston')
+const path = require('path')
 
 module.exports = class Currency {
   constructor(options) {
@@ -8,7 +9,7 @@ module.exports = class Currency {
 
   _coinPrice(x, y, price) {
     return new Promise((resolve, reject) => {
-      const imagePath = `./assets/images/coins/${this.coin}.png`
+      const imagePath = path.join(__dirname, '../../../', `assets/images/coins/${this.coin}.png`)
       const imageSize = 20
       this.sctx.text({
         x: x + 25,

@@ -1,5 +1,6 @@
 const { loadImage } = require('canvas')
-const { path, compose, not, hasIn } = require('ramda')
+const path = require('path')
+const { path: rPath, compose, not, hasIn } = require('ramda')
 const moment = require('moment')
 const winston = require('winston')
 
@@ -216,10 +217,11 @@ module.exports = class Forecast {
     if(today === false && icon === 'partly-cloudy-night') {
       icon = 'clear-day'
     }
-    const img = path([icon], icons)
-    const imgPath = './assets/images/weather/'
+    const img = rPath([icon], icons)
+    const imgPath = 'assets/images/weather/'
     const ext = '.png'
-    return img ? `${imgPath}${img}${ext}` : `${imgPath}${icons['clear-day']}${ext}`
+    return img ? path.join(__dirname, '../../../', `${imgPath}${img}${ext}`) : 
+      path.join(__dirname, '../../../', `${imgPath}${icons['clear-day']}${ext}`)
   }
 
   async draw() {
