@@ -176,7 +176,7 @@ module.exports = class Forecast {
 
       // current temperature
       this.sctx.text({
-        x: x + 105,
+        x: x + 107,
         y: yPos.temp,
         value: `${Math.round(data.temperature)}°`,
         style: { font: `26px "${this.font}"`, fill: this.fg }

@@ -56,7 +56,7 @@ module.exports = class TubeStatus {
     })
 
     this.sctx.line({
-      x: this.x + width / 2,
+      x: x + width / 2,
       y,
       height,
       style: { strokeColor: this.fg, strokeWidth: 1 }

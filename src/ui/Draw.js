@@ -69,7 +69,7 @@ module.exports = class Draw {
     const btc = await new Currency({ x: this.width/2, y: tubeStatus.height, coin: 'btc', ...this }).draw().catch(err => winston.log('error', err))
     const eth = await new Currency({ x: this.width/2, y: btc.height, coin: 'eth', ...this }).draw().catch(err => winston.log('error', err))
     await new Currency({ x: this.width/2, y: eth.height, coin: 'ltc', ...this }).draw().catch(err => winston.log('error', err))
-    await new Forecast({ x: 0, y: 422, ...this }).draw().catch(err => winston.log('error', err))
+    await new Forecast({ x: 0, y: 421, ...this }).draw().catch(err => winston.log('error', err))
   }
 
   async _drawLowPowerImage() {
