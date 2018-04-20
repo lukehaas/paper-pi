@@ -34,7 +34,7 @@ module.exports = class Wotd {
       x,
       y: y + 60,
       value: data.definition,
-      maxWidth: (this.width / 2) - x,
+      maxWidth: (this.width / 2),
       style: { font: `12px "${this.font}"`, fill: this.fg }
     })
   }

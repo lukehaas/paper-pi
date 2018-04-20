@@ -78,6 +78,6 @@ module.exports = class TubeStatus {
     }
     const height = this._tubeList(this.tubeStatus.statuses)
 
-    return { height: this.y + (height * 20) + 15 }
+    return { height: this.y + (height * 20) + 13 }
   }
 }

@@ -155,7 +155,7 @@ module.exports = class Forecast {
         location: y,
         summary: y + 20,
         temp: y + 10,
-        image: y + 28
+        image: y + 25
       }
       // Location
       this.sctx.text({

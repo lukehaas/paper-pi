@@ -34,7 +34,7 @@ module.exports = class Today {
     this.sctx.text(monthText)
     this.sctx.text(dayText)
 
-    return y + 72
+    return y + 70
   }
 
   async draw() {

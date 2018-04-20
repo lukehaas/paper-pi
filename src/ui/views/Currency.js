@@ -39,7 +39,7 @@ module.exports = class Currency {
       return
     }
     const y = this.y + 10
-    const x = this.x + 8
+    const x = this.x + 14
     const height = await this._coinPrice(x, y, this[this.coin])
     return { height }
   }
