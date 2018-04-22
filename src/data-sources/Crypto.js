@@ -5,24 +5,22 @@ const config = require('../config')
 
 module.exports = class Crypto {
   constructor() {
+    this.timeout = {}
     this.client = new Client({ 'apiKey': process.env.coinbase_key, 'apiSecret': process.env.coinbase_secret })
   }
 
   _timer(reject) {
-    return setTimeout(reject => {
-      reject(new Error('timeout'))
-    }, config.timeout, reject)
+    return setTimeout(reject, config.timeout, new Error('timeout'))
   }
 
-  _clearTimer() {
-    clearTimeout(this.timeout)
+  _clearTimer(coin) {
+    clearTimeout(this.timeout[coin])
   }
 
-  _callExchange() {
-    const coin = this.coin
+  _callExchange(coin) {
     return new Promise((resolve, reject) => {
       this.client.getExchangeRates({ 'currency': coin }, (err, rates) => {
-        this._clearTimer()
+        this._clearTimer(coin)
         const price = path(['data', 'rates', 'GBP'], rates)
         if(price) {
           resolve(cryptoModel.findOne({ coin }, 'price', (err, doc) => {
@@ -39,27 +37,27 @@ module.exports = class Crypto {
             }
           }).then(() => price))
         } else {
-          reject(this._getPrevious())
+          reject(this._getPrevious(coin))
         }
       })
     })
   }
 
-  getPrice(coin) {
-    if (!coin || typeof coin !== 'string') return new Promise((resolve, reject) => { reject('Expected coin string') })
-    this.timeout = undefined
-    this.coin = coin
-
-    return Promise.race([
-      this._callExchange(),
-      new Promise((_, reject) => {
-        this.timeout = this._timer(reject)
-      })
-    ]).catch(this._getPrevious())
+  _getTimerPromise(coin) {
+    return new Promise((_, reject) => {
+      this.timeout[coin] = this._timer(reject)
+    })
   }
 
-  _getPrevious() {
-    const coin = this.coin
+  getPrice(coin) {
+    if (!coin || typeof coin !== 'string') return new Promise((resolve, reject) => { reject('Expected coin string') })
+    return Promise.race([
+      this._callExchange(coin),
+      this._getTimerPromise(coin)
+    ]).catch(this._getPrevious(coin))
+  }
+
+  _getPrevious(coin) {
     return () => cryptoModel.findOne({ coin }, 'price', (err, doc) => doc).then(doc => doc.price)
   }
 }
