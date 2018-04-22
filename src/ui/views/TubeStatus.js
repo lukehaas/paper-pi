@@ -33,9 +33,9 @@ module.exports = class TubeStatus {
   }
 
   _tubeList(statuses) {
-    const x = this.x + 14
+    const x = this.x + 24
     const y = this.y + 9
-    const width = this.width - 15
+    const width = this.width - 25
     const height = (statuses.length + 1) * 20
 
     this.sctx.text({

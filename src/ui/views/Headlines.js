@@ -7,7 +7,7 @@ module.exports = class Headlines {
 
   _newsList(data) {
     const gap = 12
-    const x = this.x + 14
+    const x = this.x + 24
     const y = this.y
     const maxWidth = this.width - x
     const limit = 5

@@ -6,35 +6,20 @@ module.exports = class Today {
   }
 
   _date() {
-    const x = this.x + 14
-    const y = this.y + 6
-    const month = moment().format('MMM')
-    const day = moment().format('DD')
+    const x = this.x + 24
+    const y = this.y + 3
+    const day = moment().format('ddd Do MMMM')
 
     const dayText = {
       x,
-      y: y + 8,
-      baseline: 'top',
-      value: day,
-      style: { font: `39px "${this.font}"`, fill: this.fg }
-    }
-    const monthText = {
-      x,
       y,
       baseline: 'top',
-      value: month,
-      style: { font: `16px "${this.font}"`, fill: this.fg }
+      value: `${day}`,
+      style: { font: `24px "${this.font}"`, fill: this.fg }
     }
-    const dayTextWidth = this.sctx.textWidth(dayText)
-    const monthTextWidth = this.sctx.textWidth(monthText)
-
-    const monthPosition = dayTextWidth/2 - monthTextWidth/2
-
-    monthText.x = x + monthPosition
-    this.sctx.text(monthText)
     this.sctx.text(dayText)
 
-    return y + 70
+    return y + 52
   }
 
   async draw() {

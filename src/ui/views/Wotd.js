@@ -7,7 +7,7 @@ module.exports = class Wotd {
   }
 
   _word(data) {
-    const x = this.x + 14
+    const x = this.x + 24
     const y = this.y + 18
     this.sctx.text({
       x,

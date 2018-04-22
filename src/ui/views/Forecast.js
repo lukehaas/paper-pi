@@ -11,7 +11,7 @@ module.exports = class Forecast {
 
   _day(data) {
     return new Promise((resolve, reject) => {
-      const dayWidth = this.width * 0.125
+      const dayWidth = this.width * 0.12
       const dayHeight = 75
       const gap = this.width * 0.015
       const y = this.y + 130
@@ -23,7 +23,7 @@ module.exports = class Forecast {
       }
 
       data.slice(1, 8).forEach((d, i) => {
-        const x = this.x + (i*dayWidth) + (gap * i) + gap + 7
+        const x = this.x + (i*dayWidth) + (gap * i) + gap + 18
         const day = moment.unix(d.time).format('ddd')
         const dayTxtWidth = this.sctx.textWidth({
           value: day,
@@ -51,8 +51,13 @@ module.exports = class Forecast {
           style: { font: `12px "${this.font}"`, fill: this.fg }
         })
 
+        const minMaxText = `${Math.round(d.temperatureLow)}° ${Math.round(d.temperatureHigh)}°`
+        const minMaxTxtWidth = this.sctx.textWidth({
+          value: minMaxText,
+          style: { font: `11px "${this.font}"` }
+        })
         // min temp
-        this.sctx.text({
+        /*this.sctx.text({
           x: x + 5,
           y: yPos.temp,
           value: `${Math.round(d.temperatureLow)}°`,
@@ -65,7 +70,15 @@ module.exports = class Forecast {
           y: yPos.temp,
           value: `${Math.round(d.temperatureHigh)}°`,
           style: { font: `11px "${this.font}"`, fill: this.fg }
+        })*/
+
+        this.sctx.text({
+          x: x + (dayWidth/2) - (minMaxTxtWidth/2),
+          y: yPos.temp,
+          value: minMaxText,
+          style: { font: `11px "${this.font}"`, fill: this.fg }
         })
+
 
         loadImage(this._getImagePath(d.icon, false)).then((image) => {
           //console.log(image)
@@ -150,7 +163,7 @@ module.exports = class Forecast {
   _today(data) {
     return new Promise((resolve, reject) => {
       const y = this.y + 20
-      const x = this.x + 14
+      const x = this.x + 24
       const yPos = {
         location: y,
         summary: y + 20,
@@ -176,7 +189,7 @@ module.exports = class Forecast {
 
       // current temperature
       this.sctx.text({
-        x: x + 107,
+        x: x + 100,
         y: yPos.temp,
         value: `${Math.round(data.temperature)}°`,
         style: { font: `26px "${this.font}"`, fill: this.fg }
