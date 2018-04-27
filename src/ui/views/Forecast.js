@@ -51,14 +51,9 @@ module.exports = class Forecast {
           style: { font: `12px "${this.font}"`, fill: this.fg }
         })
 
-        const minMaxText = `${Math.round(d.temperatureLow)}° ${Math.round(d.temperatureHigh)}°`
-        const minMaxTxtWidth = this.sctx.textWidth({
-          value: minMaxText,
-          style: { font: `11px "${this.font}"` }
-        })
         // min temp
-        /*this.sctx.text({
-          x: x + 5,
+        this.sctx.text({
+          x: x + 3,
           y: yPos.temp,
           value: `${Math.round(d.temperatureLow)}°`,
           style: { font: `11px "${this.font}"`, fill: this.fg }
@@ -69,13 +64,6 @@ module.exports = class Forecast {
           x: x + dayWidth - tempHighTxt - 2,
           y: yPos.temp,
           value: `${Math.round(d.temperatureHigh)}°`,
-          style: { font: `11px "${this.font}"`, fill: this.fg }
-        })*/
-
-        this.sctx.text({
-          x: x + (dayWidth/2) - (minMaxTxtWidth/2),
-          y: yPos.temp,
-          value: minMaxText,
           style: { font: `11px "${this.font}"`, fill: this.fg }
         })
 
