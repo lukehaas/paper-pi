@@ -53,7 +53,7 @@ module.exports = class Forecast {
 
         // min temp
         this.sctx.text({
-          x: x + 3,
+          x: x + 2,
           y: yPos.temp,
           value: `${Math.round(d.temperatureLow)}°`,
           style: { font: `11px "${this.font}"`, fill: this.fg }

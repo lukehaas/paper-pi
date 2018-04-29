@@ -7,7 +7,7 @@ module.exports = class Today {
 
   _date() {
     const x = this.x + 24
-    const y = this.y + 6
+    const y = this.y + 15
     const day = moment().format('ddd Do MMMM')
 
     const dayText = {
