@@ -61,7 +61,7 @@ module.exports = class Forecast {
 
         // max temp
         this.sctx.text({
-          x: x + dayWidth - tempHighTxt - 2,
+          x: x + dayWidth - tempHighTxt - 1,
           y: yPos.temp,
           value: `${Math.round(d.temperatureHigh)}°`,
           style: { font: `11px "${this.font}"`, fill: this.fg }
@@ -177,7 +177,7 @@ module.exports = class Forecast {
 
       // current temperature
       this.sctx.text({
-        x: x + 100,
+        x: x + 107,
         y: yPos.temp,
         value: `${Math.round(data.temperature)}°`,
         style: { font: `26px "${this.font}"`, fill: this.fg }
