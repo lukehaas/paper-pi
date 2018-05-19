@@ -28,7 +28,7 @@ module.exports = class Headlines {
         maxWidth,
         baseline: 'top',
         style: {
-          font: `12px "${this.font}"`, fill: this.fg
+          font: `13px "${this.font}"`, fill: this.fg
         }
       }
       this.sctx.text(text)

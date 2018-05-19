@@ -9,6 +9,7 @@ const Draw = require('./ui/Draw')
 const mongoose = require('mongoose')
 const fs = require('fs')
 const winston = require('winston')
+const { zipObj } = require('ramda')
 require('dotenv').config()
 mongoose.Promise = global.Promise
 
@@ -37,14 +38,9 @@ const init = () => new Promise((resolve, reject) => {
     weather.getForecast({ latitude: 51.5074, longitude: 0.1278 }).catch(err => { winston.log('error', 'Failed to get weather data %s', err) }),
     word.getWord().catch(err => { winston.log('error', 'Failed to get word data %s', err) }),
     tfl.getLineStatus().catch(err => { winston.log('error', 'Failed to get TFL line status %s', err) })
-  ]).then(data => {
-    // 'charge', 'uptime',
-    const keys = [ 'headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'tubeStatus' ]
-    resolve(data.reduce((obj, d, i) => {
-      obj[keys[i]] = d
-      return obj
-    }, {}))
-  })
+  ])
+  .then(zipObj(['headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'tubeStatus']))
+  .then(resolve)
   .catch(reject)
 })
 
