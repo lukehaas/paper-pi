@@ -30,7 +30,7 @@ module.exports = class Today {
       y,
       baseline: 'top',
       // value: `${day}`,
-      value: 'Test 2',
+      value: 'Test 3',
       style: { font: `24px "${this.font}"`, fill: this.fg }
     }
     this.sctx.text(dayText)
