@@ -1,4 +1,4 @@
-const Word = require('../../src/data-sources/Word')
+/*const Word = require('../../src/data-sources/Word')
 require('dotenv').config()
 
 describe('Word', () => {
@@ -22,4 +22,4 @@ describe('Word', () => {
       })
     })
   })
-})
+})*/
