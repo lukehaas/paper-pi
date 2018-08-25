@@ -29,11 +29,11 @@ module.exports = class Wotd {
       value: `${data.category} [${data.pronunciation}]`,
       style: { font: `12px "${this.font}"`, fill: this.fg }
     })
-
+    
     this.sctx.text({
       x,
       y: y + 60,
-      value: data.definition,
+      value: data.definition.length > 105 ? `${data.definition.substr(0, 105)}...` : data.definition,
       maxWidth: (this.width / 2),
       style: { font: `13px "${this.font}"`, fill: this.fg }
     })

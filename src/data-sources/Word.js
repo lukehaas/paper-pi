@@ -44,7 +44,7 @@ module.exports = class Word {
     const tweet = data.find(tweet => {
       return tweet.text.indexOf(predicate) === 0
     })
-    return tweet && tweet.text.match(/^(.*)$/m)[0].replace(predicate, '').trim()
+    return tweet && tweet.text.match(/^(.*)$/m)[0].replace(predicate, '').trim().split(' ')[0].trim()
   }
 
   _upperCaseFirstLetter(str) {
@@ -52,7 +52,7 @@ module.exports = class Word {
   }
 
   _lookupWord(word, resolve, reject) {
-    this.dict.find(word, (err, data) => {
+    this.dict.find(escape(word), (err, data) => {
       const category = path(['results', 0, 'lexicalEntries', 0, 'lexicalCategory'], data)
       const pronunciation = path(['results', 0, 'lexicalEntries', 0, 'pronunciations', 0, 'phoneticSpelling'], data)
       const definition = path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
