@@ -22,24 +22,24 @@ const init = () => new Promise((resolve, reject) => {
   })
   // const system = new System()
   const news = new News()
-  const crypto = new Crypto()
+  // const crypto = new Crypto()
   const weather = new Weather()
   const word = new Word()
-  const tfl = new Tfl()
+  // const tfl = new Tfl()
   //const notes = new Notes()
   //const alexa = new Alexa()
   Promise.all([
     // system.getCharge().catch(err => { winston.log('error', 'Failed to get battery charge %s', err) }),
     // system.getUptime().catch(err => { winston.log('error', 'Failed to get uptime %s', err) }),
     news.getHeadlines().catch(err => { winston.log('error', 'Failed to get news data %s', err) }),
-    crypto.getPrice('BTC').catch(err => { winston.log('error', 'Failed to get BTC price %s', err) }),
-    crypto.getPrice('ETH').catch(err => { winston.log('error', 'Failed to get ETH price %s', err) }),
-    crypto.getPrice('LTC').catch(err => { winston.log('error', 'Failed to get LTC price %s', err) }),
+    // crypto.getPrice('BTC').catch(err => { winston.log('error', 'Failed to get BTC price %s', err) }),
+    // crypto.getPrice('ETH').catch(err => { winston.log('error', 'Failed to get ETH price %s', err) }),
+    // crypto.getPrice('LTC').catch(err => { winston.log('error', 'Failed to get LTC price %s', err) }),
     weather.getForecast({ latitude: 51.5074, longitude: 0.1278 }).catch(err => { winston.log('error', 'Failed to get weather data %s', err) }),
     word.getWord().catch(err => { winston.log('error', 'Failed to get word data %s', err) }),
-    tfl.getLineStatus().catch(err => { winston.log('error', 'Failed to get TFL line status %s', err) })
+    // tfl.getLineStatus().catch(err => { winston.log('error', 'Failed to get TFL line status %s', err) })
   ])
-  .then(zipObj(['headlines', 'btc', 'eth', 'ltc', 'forecast', 'wotd', 'tubeStatus']))
+  .then(zipObj(['headlines', 'forecast', 'wotd']))
   .then(resolve)
   .catch(reject)
 })

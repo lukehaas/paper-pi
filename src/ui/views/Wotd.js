@@ -8,34 +8,35 @@ module.exports = class Wotd {
 
   _word(data) {
     const x = this.x + 24
-    const y = this.y + 18
+    const y = this.y
+    const maxWidth = this.width - x
     this.sctx.text({
       x,
       y,
       value: 'Word of the Day',
-      style: { font: `12px "${this.font}"`, fill: this.fg }
+      style: { font: `15px "${this.font}"`, fill: this.fg }
     })
 
     this.sctx.text({
       x,
-      y: y + 20,
+      y: y + 30,
       value: data.word,
-      style: { font: `20px "${this.font}"`, fill: this.fg }
+      style: { font: `22px "${this.font}"`, fill: this.fg }
     })
 
     this.sctx.text({
       x,
-      y: y + 40,
+      y: y + 50,
       value: `${data.category} [${data.pronunciation}]`,
-      style: { font: `12px "${this.font}"`, fill: this.fg }
+      style: { font: `14px "${this.font}"`, fill: this.fg }
     })
     
     this.sctx.text({
       x,
-      y: y + 60,
-      value: data.definition.length > 105 ? `${data.definition.substr(0, 105)}...` : data.definition,
-      maxWidth: (this.width / 2),
-      style: { font: `13px "${this.font}"`, fill: this.fg }
+      y: y + 70,
+      value: data.definition.length > 160 ? `${data.definition.substr(0, 160)}...` : data.definition,
+      maxWidth,
+      style: { font: `16px "${this.font}"`, fill: this.fg }
     })
   }
 

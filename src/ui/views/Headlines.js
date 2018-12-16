@@ -6,7 +6,7 @@ module.exports = class Headlines {
   }
 
   _newsList(data) {
-    const gap = 12
+    const gap = 16
     const x = this.x + 24
     const y = this.y
     const maxWidth = this.width - x
@@ -17,7 +17,7 @@ module.exports = class Headlines {
       value: 'Headlines',
       maxWidth,
       style: {
-        font: `13px "${this.font}"`, fill: this.fg
+        font: `15px "${this.font}"`, fill: this.fg
       }
     })
     return data.slice(0, limit).reduce((y, n, i) => {
@@ -28,7 +28,7 @@ module.exports = class Headlines {
         maxWidth,
         baseline: 'top',
         style: {
-          font: `13px "${this.font}"`, fill: this.fg
+          font: `15px "${this.font}"`, fill: this.fg
         }
       }
       this.sctx.text(text)
@@ -37,7 +37,7 @@ module.exports = class Headlines {
       if(i < limit - 1) {
         this.sctx.line({
           x,
-          y: y + 8,
+          y: y + 10,
           width: maxWidth,
           dashWidth: 2,
           dashGap: 2,
@@ -49,7 +49,7 @@ module.exports = class Headlines {
         })
       }
       return y += gap
-    }, y + 8)
+    }, y + 12)
   }
 
   async draw() {
