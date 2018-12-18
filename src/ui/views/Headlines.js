@@ -17,7 +17,7 @@ module.exports = class Headlines {
       value: 'Headlines',
       maxWidth,
       style: {
-        font: `15px "${this.font}"`, fill: this.fg
+        font: `16px "${this.font}"`, fill: this.fg
       }
     })
     return data.slice(0, limit).reduce((y, n, i) => {
@@ -28,7 +28,7 @@ module.exports = class Headlines {
         maxWidth,
         baseline: 'top',
         style: {
-          font: `15px "${this.font}"`, fill: this.fg
+          font: `16px "${this.font}"`, fill: this.fg
         }
       }
       this.sctx.text(text)
