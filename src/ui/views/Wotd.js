@@ -8,7 +8,7 @@ module.exports = class Wotd {
 
   _word(data) {
     const x = this.x + 24
-    const y = this.y + 4
+    const y = this.y + 2
     const maxWidth = this.width - x
     this.sctx.text({
       x,
