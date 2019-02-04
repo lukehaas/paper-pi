@@ -11,15 +11,15 @@ module.exports = class Headlines {
     const y = this.y
     const maxWidth = this.width - x
     const limit = 5
-    this.sctx.text({
-      x,
-      y,
-      value: 'Headlines',
-      maxWidth,
-      style: {
-        font: `16px "${this.font}"`, fill: this.fg
-      }
-    })
+    // this.sctx.text({
+    //   x,
+    //   y,
+    //   value: 'Headlines',
+    //   maxWidth,
+    //   style: {
+    //     font: `16px "${this.font}"`, fill: this.fg
+    //   }
+    // })
     return data.slice(0, limit).reduce((y, n, i) => {
       const text = {
         x,
@@ -49,7 +49,7 @@ module.exports = class Headlines {
         })
       }
       return y += gap
-    }, y + 12)
+    }, y)
   }
 
   async draw() {
