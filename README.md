@@ -1,6 +1,9 @@
 # paper-pi
 
+This project generates a bitmap image displaying relevant daily infomation such as news, weather and a word of the day.
 
-[![Build Status](https://circleci.com/gh/lukehaas/paper-pi.svg?style=shield&circle-token=78e3275af4ebd491ab5ec1467df7164efc888d12)](https://circleci.com/gh/lukehaas/paper-pi)
+This image is displayed on a device of my own creation which I call a 'Paper Pi'. Named due to it's use of a Raspberry Pi and an e-paper screen.
 
-docker-compose up
+More details can be found here: [E-Ink Display for Daily News, Weather and More](https://www.hackster.io/lukehaas/e-ink-display-for-daily-news-weather-and-more-3dd7b1)
+
+![image](docs/paper-pi.jpg)
