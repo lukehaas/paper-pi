@@ -4,7 +4,6 @@
   "main": "index.js",
   "repository": "git@github.com:lukehaas/paper-pi.git",
   "author": "lukehaas <lukehaas@users.noreply.github.com>",
-  "private": true,
   "license": "GPL",
   "scripts": {
     "test": "jest --verbose",
@@ -15,8 +14,8 @@
     "alexa-sdk": "^1.0.20",
     "battery-level": "^3.0.0",
     "bmp-js": "^0.0.3",
-    "canvas": "^2.0.0-alpha.6",
-    "coinbase": "^2.0.6",
+    "canvas": "^2.5.0",
+    "coinbase": "^2.0.8",
     "dark-sky": "^1.1.2",
     "dotenv": "^4.0.0",
     "moment": "^2.19.4",
@@ -29,9 +28,8 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
-    "eslint": "^4.11.0",
-    "jest": "^23.5.0",
-    "jest-cli": "^23.5.0",
+    "eslint": "^5.16.0",
+    "jest": "^23.6.0",
     "mockingoose": "^2.4.0"
   },
   "jest": {
