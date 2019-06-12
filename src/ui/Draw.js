@@ -8,8 +8,6 @@ const Battery = require('./views/Battery')
 const Headlines = require('./views/Headlines')
 const Today = require('./views/Today')
 const Wotd = require('./views/Wotd')
-// const Currency = require('./views/Currency')
-// const TubeStatus = require('./views/TubeStatus')
 // Draw bitmaps by hand:
 //http://magazine.art21.org/2011/09/13/how-to-create-a-bitmap-image-file-by-hand-without-stencils
 module.exports = class Draw {
@@ -59,16 +57,9 @@ module.exports = class Draw {
   }
 
   async _drawImage() {
-    // await new Battery({ x: this.width - 165, y: 10, ...this }).draw().catch(err => winston.log('error', err))
     const today = await new Today({ x: 0, y: 0, ...this }).draw().catch(err => winston.log('error', err))
-
     const headlines = await new Headlines({ x: 0, y: today.height, ...this }).draw().catch(err => winston.log('error', err))
-    // const tubeStatus = await new TubeStatus({ x: 0, y: headlines.height, ...this }).draw().catch(err => winston.log('error', err))
     await new Wotd({ x: 0, y: headlines.height, ...this }).draw().catch(err => winston.log('error', err))
-
-    // const btc = await new Currency({ x: this.width/2, y: tubeStatus.height, coin: 'btc', ...this }).draw().catch(err => winston.log('error', err))
-    // const eth = await new Currency({ x: this.width/2, y: btc.height, coin: 'eth', ...this }).draw().catch(err => winston.log('error', err))
-    // await new Currency({ x: this.width/2, y: eth.height, coin: 'ltc', ...this }).draw().catch(err => winston.log('error', err))
     await new Forecast({ x: 0, y: 421, ...this }).draw().catch(err => winston.log('error', err))
   }
 

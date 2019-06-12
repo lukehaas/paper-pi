@@ -1,7 +1,6 @@
 const Weather = require('./Weather')
 const Crypto = require('./Crypto')
 const Word = require('./Word')
-//const Alexa = require('./Alexa')
 const System = require('./System')
 const News = require('./News')
 const Notes = require('./Notes')
