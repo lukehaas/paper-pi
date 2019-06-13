@@ -13,7 +13,7 @@ mongoose.Promise = global.Promise
 
 const init = () => new Promise((resolve, reject) => {
   winston.add(winston.transports.File, { filename: 'error.log' })
-  mongoose.connect(process.env.mongo_uri, { useMongoClient: true }, err => {
+  mongoose.connect(process.env.mongo_uri, { useNewUrlParser: true }, err => {
     if(err) {
       winston.log('error', 'Connection to MongoDB failed %s', err)
     }

@@ -8,20 +8,18 @@
   "scripts": {
     "test": "jest --verbose",
     "lint": "eslint index.js \"src/**/*.js\"",
-    "build": "node ./src/index.js"
+    "build": "node ./src/index.js",
+    "start": "npm run build && node ./src/server.js"
   },
   "dependencies": {
-    "alexa-sdk": "^1.0.20",
     "battery-level": "^3.0.0",
     "bmp-js": "^0.0.3",
     "canvas": "^2.5.0",
-    "coinbase": "^2.0.8",
     "dark-sky": "^1.1.2",
     "dotenv": "^4.0.0",
     "moment": "^2.19.4",
-    "mongoose": "^4.13.6",
+    "mongoose": "^5.5.15",
     "node-fetch": "^1.7.3",
-    "oxford-dictionary-api": "^1.0.1",
     "ramda": "^0.25.0",
     "shapely-canvas": "^1.0.3",
     "twit": "^2.2.9",

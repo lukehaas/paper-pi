@@ -11,7 +11,7 @@ services:
   app:
     image: lukehaas/paper-pi
     ports:
-      - "8000:8000"
+      - "8001:8001"
     links:
       - mongo
     depends_on:
