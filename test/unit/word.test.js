@@ -1,8 +1,8 @@
 jest.mock('twit')
-jest.mock('oxford-dictionary-api')
-const Word = require('../../src/data-sources/Word')
+jest.mock('../../src/data-sources/Dictionary')
 const Twit = require('twit')
-const Dictionary = require('oxford-dictionary-api')
+const Dictionary = require('../../src/data-sources/Dictionary')
+const Word = require('../../src/data-sources/Word')
 
 const twitGet = jest.fn((a, b, callback) => {
   callback(false, [{ text: 'Word of the Day: hello' }])
