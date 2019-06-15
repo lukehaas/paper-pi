@@ -16,7 +16,7 @@ const dicFind = jest.fn((word, callback) => {
   callback(false, {
     results: [{
       lexicalEntries: [{
-        lexicalCategory: 'noun',
+        lexicalCategory: { text: 'noun' },
         pronunciations: [{
           phoneticSpelling: '$$'
         }],
