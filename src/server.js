@@ -1,12 +1,17 @@
 const http = require('http')
 const fs = require('fs')
 const path = require('path')
+const generate = require('./generate')
 const port = 8001
 
-const requestHandler = (request, response) => {
-  fs.readFile(path.join(__dirname, '../build/monocolor.bmp'), (error, content) => {
+const requestHandler = async (req, response) => {
+  generate.start().then(() => {
+    const content = fs.readFileSync(path.join(__dirname, '../build/monocolor.bmp'))
     response.writeHead(200, { 'Content-Type': 'image/bmp' })
     response.end(content, 'utf-8')
+
+  }).catch(() => {
+    response.end('Error')
   })
 }
 

@@ -9,7 +9,7 @@
     "test": "jest --verbose",
     "lint": "eslint index.js \"src/**/*.js\"",
     "build": "node ./src/index.js",
-    "start": "npm run build && node ./src/server.js"
+    "start": "node ./src/server.js"
   },
   "dependencies": {
     "battery-level": "^3.0.0",
