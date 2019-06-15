@@ -53,7 +53,7 @@ module.exports = class Word {
 
   _lookupWord(word, resolve, reject) {
     this.dict.find(escape(word), (err, data) => {
-      const category = path(['results', 0, 'lexicalEntries', 0, 'lexicalCategory'], data)
+      const category = path(['results', 0, 'lexicalEntries', 0, 'lexicalCategory', 'text'], data)
       const pronunciation = path(['results', 0, 'lexicalEntries', 0, 'pronunciations', 0, 'phoneticSpelling'], data)
       const definition = path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
       this._clearTimer()

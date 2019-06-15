@@ -10,7 +10,7 @@ module.exports = class Dictionary {
     const options = {
       host : 'od-api.oxforddictionaries.com',
       port : 443,
-      path : `/api/v2/entries/en-gb/${word}`,
+      path : `/api/v2/entries/en-gb/${word}?fields=definitions,pronunciations`,
       method : 'GET',
       headers : {
         'Accept': 'application/json',
