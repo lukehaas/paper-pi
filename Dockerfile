@@ -6,14 +6,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14
   && apt-get install -y curl \
   && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
   && apt-get install -y nodejs libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++ \
-  && npm i -g yarn \
   && apt-get clean
 
 WORKDIR /app
 ADD . .
 
-RUN yarn install --production=true
+RUN npm ci
 #VOLUME /data/db
-EXPOSE 8001
+EXPOSE 8080
 
-CMD /bin/bash
+CMD npm start
