@@ -2,7 +2,7 @@ const http = require('http')
 const fs = require('fs')
 const path = require('path')
 const generate = require('./generate')
-const port = 8080
+const port = process.env.PORT || 8080
 
 const requestHandler = async (req, response) => {
   generate.start().then(() => {

@@ -9,10 +9,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14
   && apt-get clean
 
 WORKDIR /app
-ADD . .
+COPY package.json ./package.json
+COPY package-lock.json ./package-lock.json
+COPY assets ./assets
+COPY src ./src
 
-RUN npm ci
+RUN npm install --only=production
 #VOLUME /data/db
-EXPOSE 8080
+EXPOSE 8080 8080
 
-CMD npm start
+CMD ["npm", "start"]

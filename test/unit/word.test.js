@@ -5,7 +5,7 @@ const Dictionary = require('../../src/data-sources/Dictionary')
 const Word = require('../../src/data-sources/Word')
 
 const twitGet = jest.fn((a, b, callback) => {
-  callback(false, [{ text: 'Word of the Day: hello' }])
+  callback(false, [{ text: 'OED Word of the Day: hello, n' }])
 })
 Twit.mockImplementation(() => {
   return {
@@ -96,7 +96,7 @@ describe('Word', () => {
         text: 'blah'
       },
       {
-        text: 'Word of the Day: hello'
+        text: 'OED Word of the Day: hello, n'
       }]
       const wordFromTweet = word._getWordFromTweets(data)
       expect(wordFromTweet).toBe('hello')
@@ -106,7 +106,7 @@ describe('Word', () => {
   describe('_getTweets', () => {
     it('Returns an array of tweets', async done => {
       word._getTweets(tweets => {
-        expect(tweets).toEqual([{ text: 'Word of the Day: hello' }])
+        expect(tweets).toEqual([{ text: 'OED Word of the Day: hello, n' }])
         expect(twitGet).toHaveBeenCalled()
         done()
       })

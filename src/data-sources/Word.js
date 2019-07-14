@@ -27,7 +27,7 @@ module.exports = class Word {
   }
 
   _getTweets(callback, error) {
-    return this.Twit.get('statuses/user_timeline', { screen_name: 'OxfordWords',
+    return this.Twit.get('statuses/user_timeline', { screen_name: 'OED',
     count: 50,
     exclude_replies: true,
     include_rts: false }, (err, data) => {
@@ -40,11 +40,11 @@ module.exports = class Word {
   }
 
   _getWordFromTweets(data) {
-    const predicate = 'Word of the Day:'
+    const predicate = 'OED Word of the Day:'
     const tweet = data.find(tweet => {
       return tweet.text.indexOf(predicate) === 0
     })
-    return tweet && tweet.text.match(/^(.*)$/m)[0].replace(predicate, '').trim().split(' ')[0].trim()
+    return tweet && tweet.text.match(/^(.*)$/m)[0].replace(predicate, '').trim().split(', ')[0].trim()
   }
 
   _upperCaseFirstLetter(str) {
