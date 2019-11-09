@@ -20,11 +20,11 @@ module.exports = class Headlines {
     //     font: `16px "${this.font}"`, fill: this.fg
     //   }
     // })
-    return data.slice(0, limit).reduce((y, n, i) => {
+    return data.slice(0, limit).reduce((y, { title }, i) => {
       const text = {
         x,
         y,
-        value: n.title,
+        value: title.length > 68 ? title.substr(0, 68) + '...' : title,
         maxWidth,
         baseline: 'top',
         style: {
