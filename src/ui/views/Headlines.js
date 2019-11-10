@@ -24,7 +24,7 @@ module.exports = class Headlines {
       const text = {
         x,
         y,
-        value: title.length > 68 ? title.substr(0, 68) + '...' : title,
+        value: title.length > 66 ? title.substr(0, 66) + '...' : title,
         maxWidth,
         baseline: 'top',
         style: {
