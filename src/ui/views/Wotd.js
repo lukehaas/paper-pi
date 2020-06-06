@@ -27,7 +27,7 @@ module.exports = class Wotd {
     this.sctx.text({
       x,
       y: y + 30,
-      value: `${data.category} [${data.pronunciation}]`,
+      value: `${data.category} ${data.pronunciation ? [data.pronunciation] : ''}`,
       style: { font: `14px "${this.font}"`, fill: this.fg }
     })
     

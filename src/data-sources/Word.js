@@ -57,7 +57,7 @@ module.exports = class Word {
       const pronunciation = path(['results', 0, 'lexicalEntries', 0, 'pronunciations', 0, 'phoneticSpelling'], data)
       const definition = path(['results', 0, 'lexicalEntries', 0, 'entries', 0, 'senses', 0, 'definitions', 0], data)
       this._clearTimer()
-      if(category && pronunciation && definition) {
+      if(category && definition) {
         const wordOfTheDay = {
           word,
           definition,
