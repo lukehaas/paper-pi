@@ -60,7 +60,7 @@ module.exports = class Draw {
     const today = await new Today({ x: 0, y: 0, ...this }).draw().catch(err => winston.log('error', err))
     const headlines = await new Headlines({ x: 0, y: today.height, ...this }).draw().catch(err => winston.log('error', err))
     await new Wotd({ x: 0, y: headlines.height, ...this }).draw().catch(err => winston.log('error', err))
-    await new Forecast({ x: 0, y: 421, ...this }).draw().catch(err => winston.log('error', err))
+    await new Forecast({ x: 0, y: 500, showDays: false, ...this }).draw().catch(err => winston.log('error', err))
   }
 
   async _drawLowPowerImage() {

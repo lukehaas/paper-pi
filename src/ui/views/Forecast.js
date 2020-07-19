@@ -233,7 +233,7 @@ module.exports = class Forecast {
     }
     await this._today(this.forecast.currently)
     await this._hour(this.forecast.hourly.data)
-    await this._day(this.forecast.daily.data)
+    if (this.showDays) await this._day(this.forecast.daily.data)
     return true
   }
 }

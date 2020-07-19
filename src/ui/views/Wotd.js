@@ -34,7 +34,7 @@ module.exports = class Wotd {
     this.sctx.text({
       x,
       y: y + 50,
-      value: data.definition.length > 130 ? `${data.definition.substr(0, 130)}...` : data.definition,
+      value: data.definition.length > 230 ? `${data.definition.substr(0, 230)}...` : data.definition,
       maxWidth,
       style: { font: `16px "${this.font}"`, fill: this.fg }
     })
