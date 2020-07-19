@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "mockingoose": "^2.4.0"
   },
   "jest": {
