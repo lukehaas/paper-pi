@@ -19,7 +19,7 @@
     "dotenv": "^4.0.0",
     "moment": "^2.19.4",
     "mongoose": "^5.7.5",
-    "node-fetch": "^1.7.3",
+    "node-fetch": "^2.6.7",
     "ramda": "^0.25.0",
     "shapely-canvas": "^1.0.3",
     "twit": "^2.2.9",
